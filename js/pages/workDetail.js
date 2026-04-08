@@ -35,7 +35,7 @@ async function loadWorkDetails() {
 
         if (docSnap.exists()) {
             currentWork = docSnap.data();
-	// [ADD] เพิ่มยอดวิว +1 ทันทีเมื่อมีการโหลดหน้ารายละเอียดนี้
+	// เพิ่มยอดวิว +1 ทันทีเมื่อมีการโหลดหน้ารายละเอียดนี้
             try {
                 await updateDoc(docRef, {
                     views: increment(1),
@@ -96,7 +96,7 @@ function renderWorkDetail(container) {
                 <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 break-words">${currentWork.title}</h1>
                 
                 <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-6 border-b border-gray-100 pb-6">
-                    <a href="/creator-profile.html?id=${currentWork.creatorId}" class="hover:text-primary transition-colors flex items-center gap-1" title="ผู้แต่ง">
+                    <a href="creator-profile.html?id=${currentWork.creatorId}" class="hover:text-primary transition-colors flex items-center gap-1" title="ผู้แต่ง">
                         <i class="fa-solid fa-pen-nib text-emerald-400"></i> ${currentWork.creatorName || 'นักเขียนนิรนาม'}
                     </a>
                     <span><i class="fa-solid fa-layer-group text-emerald-400"></i> ${currentWork.mainGenre || 'ทั่วไป'}</span>
