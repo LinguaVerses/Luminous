@@ -38,6 +38,19 @@ export function loadNavbar() {
 
     navbarContainer.innerHTML = navHTML;
 
+//ปรับแก้ Path อัตโนมัติเมื่ออยู่ในโฟลเดอร์ย่อย (admin, creator)
+    const isSubDir = window.location.pathname.includes('/admin/') || window.location.pathname.includes('/creator/');
+    if (isSubDir) {
+        navbarContainer.querySelectorAll('a').forEach(a => {
+            const href = a.getAttribute('href');
+            if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('javascript:')) a.setAttribute('href', '../' + href);
+        });
+        navbarContainer.querySelectorAll('img').forEach(img => {
+            const src = img.getAttribute('src');
+            if (src && !src.startsWith('http') && !src.startsWith('data:')) img.setAttribute('src', '../' + src);
+        });
+    }
+
 // ระบบ Hamburger Menu
     const hamburgerBtn = document.getElementById('hamburger-btn');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -93,7 +106,7 @@ export function loadNavbar() {
                                     </div>
                                 </div>
                                 <a href="profile.html" class="block px-4 py-3 hover:bg-emerald-50 transition text-sm font-medium"><i class="fa-solid fa-user-gear w-6 text-gray-400"></i> จัดการโปรไฟล์</a>
-				<a href="library.html" class="block px-4 py-3 hover:bg-emerald-50 transition text-sm font-medium text-gray-800"><i class="fa-solid fa-book-bookmark w-6 text-primary"></i> ชั้นหนังสือของฉัน</a>
+				<a href="library.html" class="block px-4 py-3 hover:bg-emerald-50 transition text-sm font-medium text-gray-800"><i class="fa-solid fa-book-bookmark w-6 text-primary"></i> ชั้นวางอนิเมชั่นของฉัน</a>
 
 				${!isCreatorOrAdmin ? `
                                 <a href="guide-creator.html" class="block px-4 py-3 hover:bg-emerald-50 transition text-sm font-bold text-amber-500"><i class="fa-solid fa-wand-magic-sparkles w-6 text-amber-500"></i> สมัครเป็นนักเขียน</a>
@@ -207,6 +220,18 @@ export function loadNavbar() {
                     </div>
                 `;
             }
+// [ADD] ปรับแก้ Path สำหรับเมนูโปรไฟล์และปุ่มล็อกอิน เมื่ออยู่ในโฟลเดอร์ย่อย
+            if (isSubDir) {
+                authContainer.querySelectorAll('a').forEach(a => {
+                    const href = a.getAttribute('href');
+                    if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('javascript:')) a.setAttribute('href', '../' + href);
+                });
+                authContainer.querySelectorAll('img').forEach(img => {
+                    const src = img.getAttribute('src');
+                    if (src && !src.startsWith('http') && !src.startsWith('data:')) img.setAttribute('src', '../' + src);
+                });
+            }
+
         });
     }
 }
