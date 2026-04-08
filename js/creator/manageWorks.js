@@ -117,7 +117,7 @@ function createWorkCard(work, aspectClass) {
 }
 
 //สร้างฟังก์ชันเพิ่มพาเลทสีและจัดการการกดเลือกสี
-// [OVERWRITE] ผูกพาเลทสีเข้ากับ Dropdown เดิมใน HTML
+// ผูกพาเลทสีเข้ากับ Dropdown เดิมใน HTML
 function setupColorPalette() {
     const editor = document.getElementById('work-desc');
     const colorDropdown = document.getElementById('colorDropdown');
