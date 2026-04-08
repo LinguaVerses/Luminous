@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>จัดการผลงาน - Luminous Story</title>
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Mali', 'sans-serif'], reading: ['Sarabun', 'sans-serif'] },
+                    colors: { primary: { light: '#6ee7b7', DEFAULT: '#10b981', dark: '#047857' } }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* จัดรูปแบบเฉพาะกล่องเรื่องย่อ (Rich Text Editor) */
+        .rich-editor p {
+            text-indent: 2em; /* เยื้องย่อหน้าแรก */
+            margin-bottom: 1.5em !important; /* บังคับระยะห่างระหว่างย่อหน้า */
+            line-height: 1.8; /* ระยะห่างระหว่างบรรทัด */
+            display: block; /* บังคับให้เป็นบล็อก */
+        }
+        .rich-editor div {
+            margin-bottom: 1.5em; /* เผื่อกรณีเบราว์เซอร์แอบใช้ div */
+        }
+        .rich-editor hr {
+            margin: 2em 0 !important; /* ระยะห่างของเส้นคั่น บน-ล่าง */
+            border-top: 2px dashed #d1d5db;
+        }
+    </style>
+</head>
+<body class="font-sans bg-emerald-50 text-gray-800 leading-loose flex flex-col min-h-screen">
+
+    <div id="navbar-container"></div>
+
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 border-b-2 border-emerald-100 pb-4">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-800 flex items-center gap-3">
+                    <i class="fa-solid fa-book-open text-primary fa-bounce" style="--fa-animation-iteration-count: 2;"></i> จัดการผลงานทั้งหมด
+                </h1>
+                <p class="text-gray-500 mt-1">สร้าง แก้ไข และจัดการ Animation หรือ Shot Animation ของคุณ</p>
+            </div>
+            <button id="open-modal-btn" class="mt-4 md:mt-0 bg-primary text-white font-bold px-6 py-2 rounded-full shadow-lg hover:bg-primary-dark transition-colors flex items-center gap-2 transform hover:scale-105">
+                <i class="fa-solid fa-plus"></i> สร้างผลงานใหม่
+            </button>
+        </div>
+
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-2 text-emerald-700 border-b-2 border-emerald-100 pb-2">
+                <i class="fa-solid fa-video"></i> Animation
+            </h2>
+            <div id="novels-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                </div>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-2 text-indigo-700 border-b-2 border-indigo-100 pb-2">
+                <i class="fa-solid fa-film"></i> Shot Animation
+            </h2>
+            <div id="comics-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                </div>
+        </div>
+    </main>
+
+    <div id="work-modal" class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto transform transition-all border border-emerald-100">
+            <div class="sticky top-0 bg-white px-6 py-4 border-b border-emerald-50 flex justify-between items-center z-10 rounded-t-3xl">
+                <h2 class="text-2xl font-bold text-gray-800" id="modal-title"><i class="fa-solid fa-pen-to-square text-primary"></i> ข้อมูลผลงาน</h2>
+                <button id="close-modal-btn" class="text-gray-400 hover:text-red-500 transition-colors text-2xl focus:outline-none">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <form id="work-form" class="p-6 space-y-5">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">ชื่อเรื่อง <span class="text-red-500">*</span></label>
+                    <input type="text" id="work-title" required class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="เช่น เกิดใหม่เป็นท่านดยุก...">
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">ประเภทผลงาน <span class="text-red-500">*</span></label>
+                        <select id="work-type" required class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none bg-white">
+    				<option value="animation">Animation (แอนิเมชันตอนยาว)</option>
+    				<option value="shot-animation">Shot Animation (คลิปสั้น)</option>
+			</select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">ลิงก์รูปภาพปก</label>
+                        <input type="url" id="work-cover" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="https://...">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">หมวดหมู่หลัก</label>
+                        <select id="work-main-genre" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none bg-white">
+                            <option value="Action">Action (แอ็กชัน)</option>
+                            <option value="Adventure">Adventure (ผจญภัย)</option>
+                            <option value="Comedy">Comedy (ตลก)</option>
+                            <option value="Fantasy">Fantasy (แฟนตาซี)</option>
+                            <option value="Sci-Fi">Sci-Fi (ไซไฟ)</option>
+                            <option value="Romance">Romance (โรแมนติก)</option>
+                            <option value="Drama">Drama (ดราม่า)</option>
+                            <option value="Horror">Horror (สยองขวัญ)</option>
+                            <option value="Mystery">Mystery (สืบสวน)</option>
+                            <option value="Slice of Life">Slice of Life (ชีวิตประจำวัน)</option>
+                            <option value="Family / Kids">Family / Kids (เด็ก / ครอบครัว)</option>
+                            <option value="Educational">Educational (ความรู้ / สาระ)</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">โทนเรื่อง</label>
+                            <select id="work-tone" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none bg-white">
+                                <option value="Cute">Cute / น่ารัก</option>
+                                <option value="Dark">Dark / ดาร์ก</option>
+                                <option value="Emotional">Emotional / ซึ้ง</option>
+                                <option value="Lighthearted">Lighthearted / เบาสมอง</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">ธีมเนื้อหา</label>
+                            <select id="work-theme" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none bg-white">
+                                <option value="Animal">Animal (สัตว์)</option>
+                                <option value="Magic">Magic (เวทมนตร์)</option>
+                                <option value="Supernatural">Supernatural (เหนือธรรมชาติ)</option>
+                                <option value="School">School (โรงเรียน)</option>
+                                <option value="Friendship">Friendship (มิตรภาพ)</option>
+                                <option value="Adventure Quest">Adventure Quest (ภารกิจ)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">กลุ่มผู้ชม</label>
+                            <select id="work-audience" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none bg-white">
+                                <option value="Kids">Kids</option>
+                                <option value="Teen">Teen</option>
+                                <option value="Adult">Adult</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">สไตล์</label>
+                            <select id="work-style" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none bg-white">
+                                <option value="Anime Style">Anime Style</option>
+                                <option value="Western Cartoon">Western Cartoon</option>
+                                <option value="3D Animation">3D Animation</option>
+                                <option value="2D Animation">2D Animation</option>
+                            </select>
+                        </div>
+                    </div>
+		</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">สถานะเรื่อง</label>
+                        <select id="work-status" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none bg-white">
+                            <option value="Coming Soon">Coming Soon (เร็วๆ นี้)</option>
+                            <option value="Ongoing" selected>Ongoing (กำลังแต่ง)</option>
+                            <option value="Hiatus">Hiatus (หยุดพักชั่วคราว)</option>
+                            <option value="Complete">Complete (จบแล้ว)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">ตัวเลือกการเผยแพร่</label>
+                        <div class="flex flex-wrap items-center gap-4 mt-3">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="work-publish" value="true" class="w-5 h-5 text-primary focus:ring-primary">
+                                <span class="font-bold text-gray-700 text-sm">เผยแพร่ทันที</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="work-publish" value="false" checked class="w-5 h-5 text-primary focus:ring-primary">
+                                <span class="font-bold text-gray-700 text-sm">แบบร่าง (Draft)</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">เรื่องย่อ (Synopsis)</label>
+                    <div class="border rounded-xl overflow-hidden border-gray-300">
+                        <div class="bg-gray-100 p-2 flex items-center flex-wrap gap-1 border-b border-gray-300">
+                            <button type="button" onclick="formatDoc('bold')" class="w-8 h-8 flex items-center justify-center hover:bg-white rounded text-gray-700" title="ตัวหนา"><i class="fas fa-bold"></i></button>
+                            <button type="button" onclick="formatDoc('italic')" class="w-8 h-8 flex items-center justify-center hover:bg-white rounded text-gray-700" title="ตัวเอียง"><i class="fas fa-italic"></i></button>
+                            <button type="button" onclick="formatDoc('underline')" class="w-8 h-8 flex items-center justify-center hover:bg-white rounded text-gray-700" title="ขีดเส้นใต้"><i class="fas fa-underline"></i></button>
+                            <div class="w-px h-6 bg-gray-300 mx-1"></div>
+                            
+                            <div class="relative flex items-center">
+                                <button type="button" onclick="document.getElementById('colorDropdown').classList.toggle('hidden')" class="px-2 h-8 flex items-center justify-center gap-1 hover:bg-white rounded text-gray-700" title="สีตัวอักษร">
+                                    <i class="fas fa-palette"></i> <i class="fas fa-chevron-down text-[10px]"></i>
+                                </button>
+                                <div id="colorDropdown" class="hidden absolute top-full left-0 mt-1 bg-white border shadow-lg rounded p-2 grid grid-cols-5 gap-1 w-40 z-10">
+                                </div>
+                            </div>
+                            
+                            <div class="w-px h-6 bg-gray-300 mx-1"></div>
+                            <button type="button" onclick="formatDoc('justifyLeft')" class="w-8 h-8 flex items-center justify-center hover:bg-white rounded text-gray-700" title="จัดซ้าย"><i class="fas fa-align-left"></i></button>
+                            <button type="button" onclick="formatDoc('justifyCenter')" class="w-8 h-8 flex items-center justify-center hover:bg-white rounded text-gray-700" title="จัดกลาง"><i class="fas fa-align-center"></i></button>
+                            <button type="button" onclick="formatDoc('justifyRight')" class="w-8 h-8 flex items-center justify-center hover:bg-white rounded text-gray-700" title="จัดขวา"><i class="fas fa-align-right"></i></button>
+                            <div class="w-px h-6 bg-gray-300 mx-1"></div>
+                            <button type="button" onclick="formatDoc('insertHorizontalRule')" class="w-8 h-8 flex items-center justify-center hover:bg-white rounded text-gray-700" title="เพิ่มเส้นคั่น"><i class="fas fa-minus"></i></button>
+                            <div class="w-px h-6 bg-gray-300 mx-1"></div>
+                            <button type="button" onclick="formatDoc('undo')" class="w-8 h-8 flex items-center justify-center hover:bg-white rounded text-gray-700" title="เลิกทำ"><i class="fas fa-undo"></i></button>
+                            <button type="button" onclick="formatDoc('redo')" class="w-8 h-8 flex items-center justify-center hover:bg-white rounded text-gray-700" title="ทำซ้ำ"><i class="fas fa-redo"></i></button>
+                        </div>
+                        <div id="work-desc" contenteditable="true" class="rich-editor p-4 min-h-[200px] max-h-[400px] overflow-y-auto bg-white outline-none font-reading text-base text-gray-800 cursor-text"></div>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-1">* กด Enter เพื่อขึ้นย่อหน้าใหม่ (ระบบจะจัดย่อหน้าให้สวยงามอัตโนมัติ)</p>
+                </div>
+
+                <div class="pt-4 border-t border-emerald-50 text-right flex justify-end gap-3">
+                    <button type="button" id="cancel-modal-btn" class="px-6 py-3 font-bold text-gray-500 hover:bg-gray-100 rounded-xl transition-colors">ยกเลิก</button>
+                    <button type="submit" class="px-6 py-3 bg-primary text-white font-bold rounded-xl shadow-lg hover:bg-primary-dark transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-save"></i> บันทึกผลงาน
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="../js/app.js"></script>
+
+    <script>
+        // Global functions for Rich Text Editor
+        function formatDoc(cmd, value = null) {
+            if (value) {
+                document.execCommand(cmd, false, value);
+            } else {
+                document.execCommand(cmd);
+            }
+            document.getElementById('work-desc').focus();
+        }
+    </script>
+
+    <script type="module">
+        import { initManageWorks } from '../js/creator/manageWorks.js';
+        document.addEventListener('DOMContentLoaded', () => {
+            initManageWorks();
+        });
+    </script>
+</body>
+</html>

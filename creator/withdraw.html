@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ถอนรายได้ - Luminous Story Creator</title>
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Mali', 'sans-serif'], reading: ['Sarabun', 'sans-serif'] },
+                    colors: { primary: { light: '#6ee7b7', DEFAULT: '#10b981', dark: '#047857' } }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans bg-emerald-50 text-gray-800 leading-loose flex flex-col min-h-screen">
+    
+    <div id="navbar-container"></div>
+
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-5xl">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 flex items-center gap-3">
+                <i class="fa-solid fa-money-bill-transfer text-primary fa-bounce" style="--fa-animation-iteration-count: 2;"></i> ระบบจัดการรายได้
+            </h1>
+            <p class="text-gray-500 mt-1">ตรวจสอบส่วนแบ่งรายได้และทำรายการถอนเงินของคุณ</p>
+        </div>
+
+        <div class="bg-white rounded-3xl p-8 shadow-sm border border-emerald-100 mb-8 relative overflow-hidden">
+            <div class="absolute -right-20 -top-20 w-64 h-64 bg-emerald-50 rounded-full opacity-50 blur-3xl pointer-events-none"></div>
+
+            <h2 class="text-gray-500 font-bold mb-1 tracking-wide text-sm">ระดับปัจจุบัน (CURRENT TIER)</h2>
+            <h3 id="tier-name" class="text-3xl font-black text-emerald-600 mb-6">Standard Writer</h3>
+            
+            <div class="flex flex-col md:flex-row justify-between items-end mb-6 gap-6">
+                <div>
+                    <p class="text-gray-500 text-sm mb-1 font-medium">ส่วนแบ่งรายได้ (Revenue Share)</p>
+                    <p class="text-6xl font-black text-gray-800 flex items-baseline gap-1">
+                        <span id="tier-percent">70</span><span class="text-4xl text-primary">%</span>
+                    </p>
+                </div>
+                
+                <div class="w-full md:w-1/2 bg-gray-50 p-5 rounded-2xl border border-gray-100">
+                    <div class="flex justify-between items-end mb-2">
+                        <p class="text-gray-500 text-sm font-bold">รายได้สะสม (Lifetime Earnings)</p>
+                        <p class="text-xl font-bold text-gray-800"><span id="lifetime-earnings">0.00</span> THB</p>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3 mb-3 shadow-inner overflow-hidden">
+                        <div id="tier-progress" class="bg-gradient-to-r from-emerald-300 to-primary h-3 rounded-full transition-all duration-1000 w-0 relative">
+                            <div class="absolute inset-0 bg-white/20 transform -skew-x-12 animate-[shine_2s_infinite]"></div>
+                        </div>
+                    </div>
+                    <p id="tier-next-req" class="text-xs text-gray-500 font-medium text-right"><i class="fa-solid fa-rocket text-primary fa-fade"></i> อีก 50,000 THB เพื่อปรับเป็น 75%</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-8" id="tier-indicators">
+                <div class="tier-box text-center py-3 rounded-xl border-2 border-primary bg-emerald-50 shadow-sm transition-all" data-tier="standard">
+                    <p class="font-bold text-emerald-700 text-sm">Standard</p><p class="text-xs text-emerald-600 font-black">70%</p>
+                </div>
+                <div class="tier-box text-center py-3 rounded-xl border border-gray-100 bg-white text-gray-400 transition-all" data-tier="gold">
+                    <p class="font-bold text-sm">Gold</p><p class="text-xs font-black">75%</p>
+                </div>
+                <div class="tier-box text-center py-3 rounded-xl border border-gray-100 bg-white text-gray-400 transition-all" data-tier="platinum">
+                    <p class="font-bold text-sm">Platinum</p><p class="text-xs font-black">80%</p>
+                </div>
+                <div class="tier-box text-center py-3 rounded-xl border border-gray-100 bg-white text-gray-400 transition-all" data-tier="diamond">
+                    <p class="font-bold text-sm text-purple-400"><i class="fa-regular fa-gem"></i> Diamond</p><p class="text-xs font-black text-purple-400">85%</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+            <div class="lg:col-span-1 bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl p-8 shadow-lg text-white flex flex-col h-full relative overflow-hidden">
+                <i class="fa-solid fa-wallet absolute -right-10 -bottom-10 text-9xl text-white/5 transform -rotate-12"></i>
+                
+                <div class="space-y-4 mb-6 z-10 border-b border-gray-700 pb-6">
+                    <div>
+                        <p class="text-gray-400 text-xs font-bold mb-1 flex items-center gap-2"><i class="fa-solid fa-coins text-yellow-500"></i> รายได้จากการขาย (หลังหัก %)</p>
+                        <p class="text-xl font-bold text-white"><span id="sales-balance">0.00</span> <span class="text-sm text-gray-400">THB</span></p>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-xs font-bold mb-1 flex items-center gap-2"><i class="fa-solid fa-mug-hot text-pink-400"></i> รายได้จากสนับสนุน (หักค่าธรรมเนียม)</p>
+                        <p class="text-xl font-bold text-white"><span id="donate-balance">0.00</span> <span class="text-sm text-gray-400">THB</span></p>
+                    </div>
+                </div>
+
+                <p class="text-emerald-400 text-sm font-bold mb-2 z-10">รวมยอดเงินที่ถอนได้ทั้งหมด</p>
+                <h3 class="text-4xl font-black text-emerald-400 mb-8 z-10"><span id="available-balance">0.00</span> <span class="text-xl">THB</span></h3>
+                
+                <form id="withdraw-form" class="mt-auto z-10 space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 mb-1">จำนวนเงินที่ต้องการถอน (ขั้นต่ำ 500 บาท)</label>
+                        <input type="number" id="withdraw-amount" min="500" required class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl focus:ring-2 focus:ring-emerald-400 outline-none text-white text-lg placeholder-gray-500 font-bold" placeholder="0.00">
+                    </div>
+                    <button type="submit" class="w-full bg-primary text-white font-bold py-3 rounded-xl shadow-lg hover:bg-primary-light transition-colors flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-building-columns"></i> ส่งคำร้องขอถอนเงิน
+                    </button>
+                    <p class="text-[10px] text-gray-400 text-center">* ระบบจะโอนเข้าบัญชีธนาคารที่คุณลงทะเบียนไว้ภายใน 3-5 วันทำการ</p>
+                </form>
+            </div>
+
+            <div class="lg:col-span-2 bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-emerald-100">
+                <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2"><i class="fa-solid fa-clock-rotate-left text-primary"></i> ประวัติการทำรายการ</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-emerald-50 text-emerald-800 text-sm border-b border-emerald-100">
+                                <th class="py-3 px-4 font-bold rounded-tl-xl">วันที่</th>
+                                <th class="py-3 px-4 font-bold">รหัสอ้างอิง</th>
+                                <th class="py-3 px-4 font-bold text-right">จำนวนเงิน (THB)</th>
+                                <th class="py-3 px-4 font-bold text-center rounded-tr-xl">สถานะ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="withdraw-history" class="text-sm">
+                            <tr><td colspan="4" class="text-center py-10 text-gray-400">กำลังโหลดข้อมูล...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="../js/app.js"></script>
+    <script type="module">
+        import { initWithdraw } from '../js/creator/withdraw.js';
+        document.addEventListener('DOMContentLoaded', () => {
+            initWithdraw();
+        });
+    </script>
+</body>
+</html>

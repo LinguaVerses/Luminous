@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creator Dashboard - Luminous Story</title>
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Mali', 'sans-serif'], reading: ['Sarabun', 'sans-serif'] },
+                    colors: { primary: { light: '#6ee7b7', DEFAULT: '#10b981', dark: '#047857' } }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans bg-emerald-50 text-gray-800 leading-loose flex flex-col min-h-screen">
+
+    <div id="navbar-container"></div>
+
+    <main class="flex-grow container mx-auto px-4 py-8">
+        
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 border-b-2 border-emerald-100 pb-4">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-800 flex items-center gap-3">
+                    <i class="fa-solid fa-wand-magic-sparkles text-primary fa-bounce" style="--fa-animation-iteration-count: 2;"></i> Creator Dashboard
+                </h1>
+                <p class="text-gray-500 mt-1">ยินดีต้อนรับนักสร้างสรรค์! นี่คือภาพรวมผลงานของคุณ</p>
+            </div>
+            <button id="guide-btn" class="mt-4 md:mt-0 bg-white text-primary border border-primary px-4 py-2 rounded-full shadow-sm hover:bg-emerald-50 transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-circle-info"></i> คู่มือการใช้งาน
+            </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10" id="stats-container">
+            <div class="col-span-1 md:col-span-3 p-8 text-center text-emerald-600 flex flex-col items-center justify-center">
+                <i class="fa-solid fa-spinner fa-spin text-3xl mb-2 text-primary"></i>
+                <p>กำลังโหลดข้อมูลสถิติ...</p>
+            </div>
+        </div>
+
+        <div class="mb-10">
+            <h2 class="text-xl font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-bolt text-yellow-500"></i> ทางลัดจัดการผลงาน</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <a href="../placeholder.html?page=creator/works/new-animation" class="bg-white p-6 rounded-2xl shadow-sm border border-emerald-100 hover:shadow-md hover:border-primary transition-all group flex flex-col items-center justify-center text-center">
+                    <div class="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center text-primary text-2xl mb-3 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-film"></i>
+                    </div>
+                    <span class="font-bold text-gray-800">สร้าง Animation</span>
+                </a>
+                
+                <a href="../placeholder.html?page=creator/works/new-shot-animation" class="bg-white p-6 rounded-2xl shadow-sm border border-emerald-100 hover:shadow-md hover:border-primary transition-all group flex flex-col items-center justify-center text-center">
+                    <div class="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center text-primary text-2xl mb-3 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-video"></i>
+                    </div>
+                    <span class="font-bold text-gray-800">สร้าง Shot Animation</span>
+                </a>
+
+                <a href="withdraw.html" class="bg-gradient-to-br from-primary to-primary-dark p-6 rounded-2xl shadow-md hover:shadow-lg transition-all group flex flex-col items-center justify-center text-center text-white">
+                    <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center text-white text-2xl mb-3 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-money-bill-transfer fa-beat-fade"></i>
+                    </div>
+                    <span class="font-bold">ถอนรายได้ (กุญแจ)</span>
+                </a>
+            </div>
+        </div>
+
+        <div>
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold flex items-center gap-2"><i class="fa-solid fa-layer-group text-primary"></i> ผลงานของคุณ</h2>
+                <a href="works.html" class="text-sm text-primary font-bold hover:underline">ดูทั้งหมด <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <div class="bg-white rounded-2xl shadow-sm border border-emerald-100 overflow-hidden" id="recent-works-container">
+                <div class="p-8 text-center text-emerald-600 flex flex-col items-center justify-center">
+                    <i class="fa-solid fa-spinner fa-spin text-3xl mb-2 text-primary"></i>
+                    <p>กำลังโหลดผลงานของคุณ...</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="../js/app.js"></script>
+    <script type="module">
+        import { initCreatorDashboard } from '../js/creator/creatorDashboard.js';
+        document.addEventListener('DOMContentLoaded', () => {
+            initCreatorDashboard();
+        });
+    </script>
+</body>
+</html>
