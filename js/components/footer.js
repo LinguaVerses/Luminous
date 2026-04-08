@@ -20,20 +20,20 @@ export function loadFooter() {
                 <div>
                     <h4 class="font-bold mb-4 text-white">เมนูหลัก</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="/index.html" class="hover:text-white transition-colors"><i class="fa-solid fa-angle-right"></i> หน้าแรก</a></li>
-                        <li><a href="/works.html" class="hover:text-white transition-colors"><i class="fa-solid fa-angle-right"></i> ผลงานทั้งหมด</a></li>
-                        <li><a href="/guide-viewer.html" class="hover:text-white transition-colors"><i class="fa-solid fa-angle-right"></i> คู่มือการใช้งาน (Viewer)</a></li>
-                        <li><a href="/creator/dashboard.html" class="hover:text-white transition-colors text-amber-300 font-medium"><i class="fa-solid fa-star fa-spin" style="--fa-animation-duration: 3s;"></i> ศูนย์นักเขียน (Creator Center)</a></li>
+                        <li><a href="index.html" class="hover:text-white transition-colors"><i class="fa-solid fa-angle-right"></i> หน้าแรก</a></li>
+                        <li><a href="works.html" class="hover:text-white transition-colors"><i class="fa-solid fa-angle-right"></i> ผลงานทั้งหมด</a></li>
+                        <li><a href="guide-viewer.html" class="hover:text-white transition-colors"><i class="fa-solid fa-angle-right"></i> คู่มือการใช้งาน (Viewer)</a></li>
+                        <li><a href="creator/dashboard.html" class="hover:text-white transition-colors text-amber-300 font-medium"><i class="fa-solid fa-star fa-spin" style="--fa-animation-duration: 3s;"></i> ศูนย์นักเขียน (Creator Center)</a></li>
                     </ul>
                 </div>
 
                 <div>
                     <h4 class="font-bold mb-4 text-white">การช่วยเหลือและนโยบาย</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="/help-center.html#faq" class="hover:text-white transition-colors"><i class="fa-solid fa-circle-question"></i> คำถามที่พบบ่อย (FAQ)</a></li>
-                        <li><a href="/help-center.html#terms" class="hover:text-white transition-colors"><i class="fa-solid fa-file-contract"></i> ข้อตกลงการใช้งาน</a></li>
-                        <li><a href="/help-center.html#privacy" class="hover:text-white transition-colors"><i class="fa-solid fa-user-shield"></i> นโยบายความเป็นส่วนตัว</a></li>
-                        <li><a href="/contact-us.html" class="hover:text-white transition-colors"><i class="fa-solid fa-envelope"></i> ติดต่อเรา</a></li>
+                        <li><a href="help-center.html#faq" class="hover:text-white transition-colors"><i class="fa-solid fa-circle-question"></i> คำถามที่พบบ่อย (FAQ)</a></li>
+                        <li><a href="help-center.html#terms" class="hover:text-white transition-colors"><i class="fa-solid fa-file-contract"></i> ข้อตกลงการใช้งาน</a></li>
+                        <li><a href="help-center.html#privacy" class="hover:text-white transition-colors"><i class="fa-solid fa-user-shield"></i> นโยบายความเป็นส่วนตัว</a></li>
+                        <li><a href="contact-us.html" class="hover:text-white transition-colors"><i class="fa-solid fa-envelope"></i> ติดต่อเรา</a></li>
                     </ul>
                 </div>
 
@@ -54,4 +54,12 @@ export function loadFooter() {
     `;
 
     footerContainer.innerHTML = footerHTML;
+// [ADD] ปรับแก้ Path อัตโนมัติเมื่ออยู่ในโฟลเดอร์ย่อย (admin, creator)
+    const isSubDir = window.location.pathname.includes('/admin/') || window.location.pathname.includes('/creator/');
+    if (isSubDir) {
+        footerContainer.querySelectorAll('a').forEach(a => {
+            const href = a.getAttribute('href');
+            if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('javascript:')) a.setAttribute('href', '../' + href);
+        });
+    }
 }
