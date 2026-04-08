@@ -96,7 +96,7 @@ function renderNotifications() {
 	// ให้เปิด Popup สำหรับข้อความทุกประเภทรวมถึงการเติมเงิน (ยกเว้นแบบมีลิงก์)
         let clickAction = `window.openGeneralPopup('${n.id}')`;
         if (n.workId && n.episodeId) {
-            clickAction = `window.markAsReadAndRedirect('${n.id}', '/read.html?workId=${n.workId}&epId=${n.episodeId}')`;
+            clickAction = `window.markAsReadAndRedirect('${n.id}', 'read.html?workId=${n.workId}&epId=${n.episodeId}')`;
         }
 
         return `
