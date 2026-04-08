@@ -1,0 +1,10 @@
+# Firebase configuration (Secret keys)
+.env
+js/config/firebaseConfig.js
+
+# Personal/Private Images
+assets/images/payment_qr/
+
+# OS generated files
+.DS_Store
+Thumbs.db
