@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คู่มือการสมัครเป็น Creator - Emerald Key</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#10b981', // emerald-500
+                        'primary-dark': '#059669', // emerald-600
+                        'primary-light': '#ecfdf5', // emerald-50
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans Thai', sans-serif; }
+        
+        /* Custom Keyframes for animations */
+        @keyframes custom-beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .fa-custom-beat {
+            animation: custom-beat 1.5s infinite;
+        }
+
+        @keyframes custom-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .fa-custom-bounce {
+            animation: custom-bounce 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="min-h-screen py-10 px-4">
+        <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
+            
+            <div class="bg-primary-light p-8 border-b border-emerald-100 relative">
+                <a href="profile.html" class="absolute top-6 left-6 text-gray-500 hover:text-primary transition-colors flex items-center gap-2 text-sm">
+                    <i class="fa-solid fa-arrow-left"></i> กลับไปหน้าโปรไฟล์
+                </a>
+
+                <div class="text-center mt-6">
+                    <div class="inline-flex items-center justify-center w-20 h-20 bg-emerald-100 rounded-full mb-4 shadow-inner">
+                        <i class="fa-solid fa-pen-nib text-5xl text-primary fa-custom-beat"></i>
+                    </div>
+                    <h1 class="text-3xl font-bold text-gray-900">คู่มือการสมัครเป็น Creator</h1>
+                    <p class="text-emerald-700 mt-3 max-w-xl mx-auto">
+                        ยินดีต้อนรับสู่ครอบครัวนักเขียนของเรา! นี่คือขั้นตอนและข้อดีของการสมัครเป็น Creator เพื่อเริ่มสร้างรายได้จากผลงานของคุณ
+                    </p>
+                </div>
+            </div>
+
+            <div class="p-8 sm:p-10 space-y-12">
+                
+                <section>
+                    <div class="flex items-center gap-3 mb-6">
+                        <i class="fa-solid fa-star text-2xl text-yellow-500"></i>
+                        <h2 class="text-2xl font-bold text-gray-800">ข้อดีของการเป็น Creator</h2>
+                    </div>
+                    
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 flex gap-5 items-start hover:shadow-md transition-shadow">
+                            <div class="text-4xl text-emerald-600 mt-1">
+                                <i class="fa-solid fa-money-bill-wave fa-custom-bounce"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg text-gray-800">รายได้จากการขายและโดเนท</h3>
+                                <p class="text-gray-600 text-sm mt-1 leading-relaxed">รับส่วนแบ่งรายได้ 80% จากการขายรายตอน, บุฟเฟต์ และรับโดเนทจากนักอ่านได้ 100% <span class="text-xs text-gray-400">(หลังหักค่าธรรมเนียมช่องทางชำระเงิน)</span></p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 flex gap-5 items-start hover:shadow-md transition-shadow">
+                            <div class="text-4xl text-emerald-600 mt-1">
+                                <i class="fa-solid fa-chart-line fa-custom-bounce"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg text-gray-800">ระบบจัดการผลงาน</h3>
+                                <p class="text-gray-600 text-sm mt-1 leading-relaxed">ใช้งานหลังบ้านสำหรับนักเขียนแบบมืออาชีพ ทั้งการลงงาน, ติดตามสถิติ, และจัดการเหรียญ/กุญแจ</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <hr class="border-gray-100">
+
+                <section>
+                    <div class="flex items-center gap-3 mb-6">
+                        <i class="fa-solid fa-clipboard-check text-2xl text-primary"></i>
+                        <h2 class="text-2xl font-bold text-gray-800">สิ่งที่ต้องเตรียมก่อนสมัคร</h2>
+                    </div>
+                    
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div class="flex gap-4 items-center bg-white p-5 rounded-2xl border-2 border-dashed border-gray-100">
+                            <i class="fa-solid fa-user-circle text-4xl text-gray-300"></i>
+                            <p class="text-gray-700">คุณต้องเป็นสมาชิกของแอป (Reader) เรียบร้อยแล้ว</p>
+                        </div>
+                        <div class="flex gap-4 items-center bg-white p-5 rounded-2xl border-2 border-dashed border-gray-100">
+                            <i class="fa-solid fa-id-card text-4xl text-gray-300 fa-fade"></i>
+                            <p class="text-gray-700">เตรียมข้อมูล: นามปากกา, ข้อมูลติดต่อ และบัญชีธนาคาร</p>
+                        </div>
+                    </div>
+                </section>
+
+                <hr class="border-gray-100">
+
+                <section>
+                    <div class="flex items-center gap-3 mb-8">
+                        <i class="fa-solid fa-rocket text-2xl text-primary fa-custom-bounce"></i>
+                        <h2 class="text-2xl font-bold text-gray-800">ขั้นตอนการสมัคร</h2>
+                    </div>
+                    
+                    <div class="space-y-6 relative before:absolute before:inset-y-0 before:left-4 before:w-0.5 before:bg-emerald-100 before:ml-px">
+                        <div class="flex items-start gap-6 relative">
+                            <div class="flex items-center justify-center w-9 h-9 rounded-full bg-primary text-white font-bold shrink-0 mt-1 shadow">1</div>
+                            <div class="bg-gray-50 p-5 rounded-xl border border-gray-100 w-full">
+                                <p class="font-bold text-gray-800">เข้าสู่ระบบ</p>
+                                <p class="text-gray-600 text-sm">ไปที่หน้า "โปรไฟล์" หรือ "แดชบอร์ด"</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-6 relative">
+                            <div class="flex items-center justify-center w-9 h-9 rounded-full bg-primary text-white font-bold shrink-0 mt-1 shadow">2</div>
+                            <div class="bg-gray-50 p-5 rounded-xl border border-gray-100 w-full">
+                                <p class="font-bold text-gray-800">คลิกปุ่มสมัคร</p>
+                                <p class="text-gray-600 text-sm">คลิกปุ่ม <span class="text-primary font-bold">"สมัครเป็น Creator"</span> (หรือ "อัปเกรดเป็นนักเขียน") ในหน้าที่กำหนด</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-6 relative">
+                            <div class="flex items-center justify-center w-9 h-9 rounded-full bg-primary text-white font-bold shrink-0 mt-1 shadow">3</div>
+                            <div class="bg-gray-50 p-5 rounded-xl border border-gray-100 w-full">
+                                <p class="font-bold text-gray-800">กรอกข้อมูล</p>
+                                <p class="text-gray-600 text-sm">ระบุนามปากกา (Pen Name), และคำอธิบายสั้นๆ (Bio)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-6 relative">
+                            <div class="flex items-center justify-center w-9 h-9 rounded-full bg-primary text-white font-bold shrink-0 mt-1 shadow">4</div>
+                            <div class="bg-gray-50 p-5 rounded-xl border border-gray-100 w-full">
+                                <p class="font-bold text-gray-800">เสร็จสิ้น!</p>
+                                <p class="text-gray-600 text-sm">กดยืนยันการอัปเกรด -> เป็น Creator ทันที! 🎉</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 bg-emerald-50 p-5 rounded-xl border border-emerald-100 text-sm text-emerald-800 flex gap-3">
+                        <i class="fa-solid fa-info-circle text-xl mt-0.5"></i>
+                        <p>หลังจากอัปเกรด คุณจะสามารถเพิ่มนิยายใหม่และตั้งค่าการติดเหรียญได้ใน "หน้าจัดการนักเขียน" ครับ</p>
+                    </div>
+                </section>
+
+                <div class="text-center pt-10 border-t border-gray-100">
+                    <a href="register-creator.html" class="inline-flex items-center gap-3 px-10 py-4 bg-primary text-white font-bold text-lg rounded-2xl shadow-lg hover:bg-primary-dark hover:-translate-y-1 transition-all group">
+                        เริ่มสมัครเป็น Creator เลย!
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <p class="text-gray-400 text-xs mt-3">ระบบจะพาคุณไปหน้ากรอกข้อมูลนักเขียน</p>
+                </div>
+
+            </div>
+
+            <div class="bg-gray-50 p-6 text-center border-t border-gray-100 text-sm text-gray-500">
+                &copy; 2024 Emerald Key Platform. All rights reserved.
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ความเข้าใจเรื่องรายได้ | Luminous Story</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Prompt', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 p-4 md:p-8">
+    <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-lg overflow-hidden relative">
+        
+        <div class="bg-gradient-to-r from-blue-500 to-indigo-600 p-8 text-white relative">
+            <a href="javascript:history.back()" class="absolute top-6 left-6 text-white hover:text-blue-200 transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-arrow-left"></i> กลับ
+            </a>
+            <h1 class="text-3xl font-bold mb-2 mt-6"><i class="fa-solid fa-chart-line mr-2"></i> รายละเอียดรายได้สำหรับ Creator</h1>
+            <p class="text-blue-100">ความเข้าใจเรื่องระบบส่วนแบ่งรายได้ และการแปลงยอดวิวให้เป็นเงิน</p>
+        </div>
+
+        <div class="p-8 space-y-8">
+            
+            <section class="bg-blue-50 p-6 rounded-2xl border border-blue-100">
+                <h2 class="text-xl font-bold text-blue-800 mb-4"><i class="fa-solid fa-bullseye"></i> รายได้ของ Creator มาจากอะไร?</h2>
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="bg-white p-4 rounded-xl flex-1 text-center shadow-sm">
+                        <i class="fa-solid fa-unlock-keyhole text-3xl text-primary mb-2"></i>
+                        <p class="font-bold">ปลดล็อกตอน</p>
+                        <p class="text-xs text-gray-500">Episode Unlock</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl flex-1 text-center shadow-sm">
+                        <i class="fa-solid fa-box-open text-3xl text-amber-500 mb-2"></i>
+                        <p class="font-bold">ซื้อทั้งเรื่อง</p>
+                        <p class="text-xs text-gray-500">Complete Unlock</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl flex-1 text-center shadow-sm">
+                        <i class="fa-solid fa-heart text-3xl text-rose-500 mb-2"></i>
+                        <p class="font-bold">สนับสนุนเพิ่ม</p>
+                        <p class="text-xs text-gray-500">Tip จากผู้ชม</p>
+                    </div>
+                </div>
+                <div class="mt-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm text-center font-semibold">
+                    ⚠️ สำคัญ: Creator จะได้รับรายได้เมื่อ "ผู้ชมทำการซื้อ" เท่านั้น (ดูฟรี = ไม่ได้เงิน)
+                </div>
+            </section>
+
+            <section>
+                <h2 class="text-xl font-bold text-gray-800 mb-4">💸 ระบบส่วนแบ่งรายได้ (Revenue Share)</h2>
+                <div class="flex flex-col md:flex-row gap-6 mb-4">
+                    <div class="flex-1 bg-white border-2 border-emerald-200 rounded-xl p-5 text-center">
+                        <h3 class="text-gray-500 font-bold mb-2">ส่วนแบ่ง Creator (เริ่มต้น)</h3>
+                        <p class="text-4xl font-black text-emerald-500">70%</p>
+                        <p class="text-xs text-gray-400 mt-2">ของ Net Revenue </p>
+                    </div>
+                    <div class="flex-1 bg-white border-2 border-gray-200 rounded-xl p-5 text-center">
+                        <h3 class="text-gray-500 font-bold mb-2">ส่วนแบ่ง Platform</h3>
+                        <p class="text-4xl font-black text-gray-400">30%</p>
+                        <p class="text-xs text-gray-400 mt-2">ค่าเซิร์ฟเวอร์, พัฒนาระบบ </p>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-600 bg-gray-50 p-3 rounded-lg border border-gray-100">💡 <strong>Net Revenue:</strong> รายได้หลังหักค่าธรรมเนียมจากระบบชำระเงิน (เช่น 2–5%) </p>
+            </section>
+
+            <section>
+                <h2 class="text-xl font-bold text-gray-800 mb-4">🚀 ระบบ Step-up Revenue Share</h2>
+                <p class="text-gray-600 mb-4 text-sm">ยิ่งคุณเติบโต รายได้ยิ่งเพิ่ม ระบบจะอัปเดต Tier อัตโนมัติเป็นรายเดือน อิงจากรายได้สะสม 12 เดือนล่าสุด (เมื่อเลื่อน Tier แล้วจะ "ล็อกไว้ 3 เดือน") </p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-indigo-50 text-indigo-800">
+                                <th class="p-3 border-b-2 border-indigo-200">รายได้สะสม</th>
+                                <th class="p-3 border-b-2 border-indigo-200 text-center">ส่วนแบ่ง Creator</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b"><td class="p-3">0 – 50,000 บาท</td><td class="p-3 font-bold text-center text-gray-700">70%</td></tr>
+                            <tr class="border-b"><td class="p-3">50,001 – 150,000 บาท</td><td class="p-3 font-bold text-center text-primary">75%</td></tr>
+                            <tr class="border-b"><td class="p-3">150,001 – 500,000 บาท</td><td class="p-3 font-bold text-center text-blue-600">80%</td></tr>
+                            <tr class="border-b"><td class="p-3">มากกว่า 500,000 บาท</td><td class="p-3 font-bold text-center text-purple-600">85%</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="bg-gray-800 text-white p-6 rounded-2xl">
+                <h2 class="text-xl font-bold text-yellow-400 mb-4"><i class="fa-solid fa-calculator"></i> การคำนวณ Keys เป็นรายได้จริง</h2>
+                <div class="space-y-4 font-mono text-sm">
+                    <p class="bg-gray-700 p-3 rounded">1 Key ≈ 1 บาท (อาจแตกต่างตามแพ็กเกจ) </p>
+                    <div class="bg-gray-900 p-4 rounded-xl border border-gray-700">
+                        <p class="text-gray-400 mb-2">ตัวอย่าง: ขายตอนละ 5 Keys | คนซื้อ 100 คน</p>
+                        <ol class="list-decimal pl-5 space-y-2">
+                            <li>รายได้รวม: 100 x 5 = <span class="text-yellow-400">500 Keys</span></li>
+                            <li>หักค่าธรรมเนียมชำระเงิน (เช่น 5%): เหลือ <span class="text-yellow-400">475 Keys</span> </li>
+                            <li>คิดส่วนแบ่ง Creator (70%): <span class="text-emerald-400 font-bold text-lg">332.5 Keys</span></li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="text-xl font-bold text-gray-800 mb-4">💵 การถอนเงิน (Withdraw)</h2>
+                <ul class="list-disc pl-5 space-y-2 text-gray-700">
+                    <li><strong>เงื่อนไขเบื้องต้น:</strong> มียอดขั้นต่ำ 500 บาท และกรอกข้อมูลบัญชีให้ถูกต้อง </li>
+                    <li><strong>ระยะเวลา:</strong> ระบบจะดำเนินการภายใน 3–7 วันทำการ (อาจแตกต่างตามธนาคาร) </li>
+                </ul>
+            </section>
+
+            <section class="bg-amber-50 p-6 rounded-2xl border border-amber-200">
+                <h2 class="text-lg font-bold text-amber-800 mb-2">🧠 Insight สำคัญ</h2>
+                <p class="text-amber-900"><strong>รายได้ที่แท้จริง = จำนวนคนซื้อ × ความต่อเนื่องของเรื่อง</strong> </p>
+                <p class="text-sm text-amber-700 mt-2">คุณไม่จำเป็นต้องมีผู้ติดตามหลักหมื่น หรือยอดวิวจำนวนมาก แค่มี "ผู้ชมที่ยอมจ่าย" ก็สามารถสร้างรายได้ได้ </p>
+            </section>
+
+        </div>
+    </div>
+</body>
+</html>
