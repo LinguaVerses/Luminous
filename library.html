@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ชั้นวางอนิเมชั่นของฉัน | Luminous Story</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { primary: '#10b981', 'primary-dark': '#059669' },
+                    fontFamily: { sans: ['Prompt', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Prompt', sans-serif; }
+        .tab-active { border-bottom: 3px solid #10b981; color: #10b981; font-weight: 700; }
+        .tab-inactive { border-bottom: 3px solid transparent; color: #6b7280; font-weight: 500; }
+        .tab-inactive:hover { color: #10b981; border-bottom: 3px solid #a7f3d0; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+
+    <div id="navbar-container"></div>
+
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-6xl">
+        <div class="flex items-center gap-4 mb-8">
+            <div class="w-14 h-14 bg-emerald-100 text-primary rounded-2xl flex items-center justify-center text-3xl shadow-sm transform rotate-3">
+                <i class="fa-solid fa-book-bookmark fa-bounce" style="--fa-animation-iteration-count: 2;"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold text-gray-800">ชั้นวางอนิเมชั่นของฉัน</h1>
+                <p class="text-gray-500 mt-1 text-sm md:text-base">พื้นที่ส่วนตัวสำหรับเก็บผลงานที่คุณชื่นชอบและกำลังติดตาม</p>
+            </div>
+        </div>
+
+        <div class="flex space-x-2 md:space-x-8 border-b border-gray-200 mb-8 overflow-x-auto hide-scrollbar">
+            <button onclick="window.switchTab('history')" id="tab-history" class="tab-active pb-3 px-2 md:px-4 text-sm md:text-base whitespace-nowrap transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-clock-rotate-left"></i> รับชมล่าสุด
+            </button>
+            <button onclick="window.switchTab('bookmarks')" id="tab-bookmarks" class="tab-inactive pb-3 px-2 md:px-4 text-sm md:text-base whitespace-nowrap transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-heart"></i> บุ๊กมาร์กของฉัน
+            </button>
+            <button onclick="window.switchTab('purchased')" id="tab-purchased" class="tab-inactive pb-3 px-2 md:px-4 text-sm md:text-base whitespace-nowrap transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-unlock-keyhole"></i> ปลดล็อกแล้ว
+            </button>
+        </div>
+
+        <div id="library-content" class="min-h-[400px]">
+            <div id="loading-spinner" class="flex flex-col items-center justify-center py-20 text-primary">
+                <i class="fa-solid fa-circle-notch fa-spin text-5xl mb-4"></i>
+                <p class="font-bold text-gray-500 animate-pulse">กำลังโหลดข้อมูล...</p>
+            </div>
+
+            <div id="works-grid" class="hidden grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
+                </div>
+
+            <div id="empty-state" class="hidden flex flex-col items-center justify-center py-20 px-4 text-center">
+                <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center text-4xl text-gray-300 mb-4 shadow-inner">
+                    <i id="empty-icon" class="fa-regular fa-folder-open"></i>
+                </div>
+                <h3 id="empty-title" class="text-xl font-bold text-gray-700 mb-2">ไม่พบข้อมูล</h3>
+                <p id="empty-desc" class="text-gray-500 mb-6 max-w-md">คุณยังไม่มีประวัติในหมวดหมู่นี้ เริ่มต้นค้นหาและอ่านผลงานที่น่าสนใจได้เลย</p>
+                <a href="/works.html" class="bg-primary hover:bg-primary-dark text-white font-bold py-2.5 px-6 rounded-full shadow hover:-translate-y-1 transition-all duration-300">
+                    <i class="fa-solid fa-compass mr-2"></i>สำรวจผลงาน
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="/js/components/navbar.js"></script>
+    <script type="module">
+        import { loadNavbar } from '/js/components/navbar.js';
+        document.addEventListener('DOMContentLoaded', loadNavbar);
+    </script>
+    <script type="module" src="/js/pages/library.js"></script>
+</body>
+</html>

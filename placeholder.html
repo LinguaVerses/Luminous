@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>กำลังสร้างหน้า...</title>
+    <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                fontFamily: {
+                    sans: ['Mali', 'sans-serif'], // ฟอนต์หลักของระบบ
+                    reading: ['Sarabun', 'sans-serif'], // ฟอนต์สำหรับหน้าอ่านนิยาย
+                },
+                colors: {
+                    primary: {
+                        light: '#6ee7b7', // Emerald 300
+                        DEFAULT: '#10b981', // Emerald 500 (สีหลัก)
+                        dark: '#047857', // Emerald 700
+                    }
+                }
+            }
+        }
+    }
+</script>
+</head>
+<body class="bg-gray-100 h-screen flex flex-col justify-center items-center">
+
+    <div class="bg-white p-8 rounded-lg shadow-lg text-center max-w-md w-full">
+        <h1 class="text-2xl font-bold text-gray-800 mb-4">หน้านี้กำลังอยู่ระหว่างการพัฒนา 🚧</h1>
+        <p class="text-gray-600 mb-6" id="pageName">Path: </p>
+        <button onclick="window.history.back()" class="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 transition-colors">
+            ย้อนกลับไปหน้าก่อนหน้า
+        </button>
+    </div>
+
+    <script>
+        // ดึงชื่อหน้าจาก URL Parameter มาแสดง
+        const urlParams = new URLSearchParams(window.location.search);
+        const page = urlParams.get('page');
+        document.getElementById('pageName').innerText = `ปลายทางที่ต้องการไป: /${page || 'ไม่ระบุ'}`;
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ประวัติการใช้กุญแจ - Luminous Story</title>
+    <link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Mali', 'sans-serif'], reading: ['Sarabun', 'sans-serif'] },
+                    colors: { primary: { light: '#6ee7b7', DEFAULT: '#10b981', dark: '#047857' } }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans bg-emerald-50 text-gray-800 leading-loose flex flex-col min-h-screen">
+    
+    <div id="navbar-container"></div>
+
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-5xl">
+        <div class="mb-8 border-b-2 border-emerald-100 pb-4">
+            <h1 class="text-3xl font-bold text-gray-800 flex items-center gap-3">
+                <i class="fa-solid fa-clock-rotate-left text-primary"></i> ประวัติการใช้กุญแจ (Transactions)
+            </h1>
+            <p class="text-gray-500 mt-1">ตรวจสอบประวัติการได้รับและใช้จ่ายกุญแจทั้งหมดของคุณ</p>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-sm border border-emerald-100 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-emerald-50/50 text-emerald-800 border-b border-emerald-100 text-sm">
+                            <th class="py-4 px-6 font-bold whitespace-nowrap">วันที่และเวลา</th>
+                            <th class="py-4 px-6 font-bold">ประเภทรายการ</th>
+                            <th class="py-4 px-6 font-bold">รายละเอียดอ้างอิง</th>
+                            <th class="py-4 px-6 font-bold text-right">จำนวนกุญแจ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tx-list" class="text-sm">
+                        <tr><td colspan="4" class="text-center py-10 text-gray-500"><i class="fa-solid fa-spinner fa-spin text-2xl mb-2 text-primary"></i><br>กำลังโหลดประวัติ...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./js/app.js"></script>
+    <script type="module" src="./js/pages/transactions.js"></script>
+</body>
+</html>

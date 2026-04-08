@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รับชม Motion Comic - Luminous Story</title>
+    <link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Mali', 'sans-serif'], reading: ['Sarabun', 'sans-serif'] },
+                    colors: { primary: { light: '#6ee7b7', DEFAULT: '#10b981', dark: '#047857' } }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+    <div id="navbar-container"></div>
+
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-4xl relative">
+        <div class="flex items-center justify-between mb-6 bg-white p-4 rounded-2xl shadow-sm border border-emerald-50">
+            <a href="#" id="back-btn" class="text-gray-500 hover:text-primary transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-arrow-left"></i> กลับหน้ารายละเอียด
+            </a>
+            <div class="text-center">
+                <p id="nav-work-title" class="text-xs text-gray-400 font-bold mb-1"></p>
+                <h1 id="nav-ep-title" class="text-sm md:text-base font-bold text-emerald-700 truncate max-w-[200px] md:max-w-md">กำลังโหลด...</h1>
+            </div>
+            <div class="w-20"></div> </div>
+
+        <div id="loading-spinner" class="text-center py-20 text-gray-500">
+            <i class="fa-solid fa-spinner fa-spin text-4xl text-primary mb-4"></i><br>กำลังโหลดเนื้อหา...
+        </div>
+
+        <div id="content-container" class="hidden">
+            <h2 id="ep-title-display" class="text-2xl font-bold text-gray-800 mb-6 text-center"></h2>
+            
+            <div id="reading-content" class="mb-10 min-h-[50vh]"></div>
+
+            <div id="lock-screen" class="hidden absolute inset-0 bg-white/80 backdrop-blur-md z-20 flex items-center justify-center rounded-3xl mx-4 mt-24 mb-10 border border-gray-100 shadow-xl">
+                <div class="text-center bg-white p-8 rounded-3xl shadow-lg border border-emerald-100 max-w-sm w-full relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-emerald-50 to-teal-50 opacity-50"></div>
+                    <i class="fa-solid fa-lock text-6xl text-emerald-400 mb-4 group-hover:scale-110 transition-transform relative z-10"></i>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2 relative z-10">ตอนนี้ติดกุญแจ</h3>
+                    <p class="text-sm text-gray-500 mb-6 relative z-10">สนับสนุนผลงานเพื่อปลดล็อกตอนนี้</p>
+                    
+                    <button id="btn-unlock-single" class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-3 px-6 rounded-full shadow-md transition-all flex items-center justify-center gap-2 mb-3 relative z-10 hover:-translate-y-1">
+                        <i class="fa-solid fa-key"></i> ปลดล็อก <span id="single-price">10</span> กุญแจ
+                    </button>
+
+                    <button id="btn-unlock-bundle" class="hidden w-full bg-gradient-to-r from-amber-400 to-orange-400 hover:from-amber-500 hover:to-orange-500 text-white font-bold py-3 px-6 rounded-full shadow-md transition-all flex items-center justify-center gap-2 relative z-10 hover:-translate-y-1 overflow-hidden">
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="episode-navigation" class="hidden flex justify-between items-center mt-10 mb-12">
+            <button id="btn-prev-ep" class="px-6 py-3 bg-white text-gray-600 font-bold rounded-full shadow-sm border border-gray-200 hover:border-primary hover:text-primary transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+                <i class="fa-solid fa-chevron-left"></i> ตอนก่อนหน้า
+            </button>
+            <button id="btn-next-ep" class="px-6 py-3 bg-primary text-white font-bold rounded-full shadow-md hover:bg-primary-dark transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+                ตอนถัดไป <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <div id="comments-section" class="hidden bg-white rounded-3xl shadow-sm border border-gray-100 p-6 md:p-8 mt-8">
+            <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                <i class="fa-regular fa-comments text-primary"></i> ความคิดเห็น (<span id="comment-count">0</span>)
+            </h3>
+            
+            <div class="flex gap-4 mb-8">
+                <img id="current-user-avatar" src="https://via.placeholder.com/40" class="w-12 h-12 rounded-full object-cover shrink-0 border border-emerald-100 shadow-sm">
+                <div class="flex-grow">
+                    <textarea id="comment-input" class="w-full bg-emerald-50/30 border border-emerald-100 rounded-2xl p-4 focus:ring-2 focus:ring-primary outline-none transition-all resize-none" rows="3" placeholder="ร่วมแบ่งปันความรู้สึกเกี่ยวกับตอนนี้..."></textarea>
+                    <div class="flex justify-end mt-2">
+                        <button id="btn-submit-comment" class="px-6 py-2 bg-primary text-white font-bold rounded-full shadow-sm hover:bg-primary-dark transition-colors flex items-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i> ส่งข้อความ
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="comments-list" class="space-y-4"></div>
+        </div>
+    </main>
+
+    <div id="videoModal" class="fixed inset-0 bg-black/90 z-[100] hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
+        <div id="videoModalContent" class="w-full max-w-4xl aspect-video bg-black rounded-2xl overflow-hidden relative shadow-2xl scale-95 transition-transform duration-300">
+            <button onclick="window.closeVideoModal()" class="absolute top-2 right-2 md:top-4 md:right-4 text-white/80 hover:text-white hover:scale-110 transition-all text-2xl md:text-3xl z-10 drop-shadow-md bg-black/60 w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <iframe id="youtubePlayer" class="w-full h-full" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./js/app.js"></script>
+    <script type="module">
+        import { initWatcher } from './js/pages/watch.js';
+        document.addEventListener('DOMContentLoaded', () => {
+            initWatcher();
+        });
+    </script>
+</body>
+</html>

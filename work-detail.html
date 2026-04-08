@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายละเอียดผลงาน - Luminous Story</title>
+    <link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Mali', 'sans-serif'], reading: ['Sarabun', 'sans-serif'] },
+                    colors: { primary: { light: '#6ee7b7', DEFAULT: '#10b981', dark: '#047857' } }
+                }
+            }
+        }
+    </script>
+    <style>
+        .synopsis-content p { margin-bottom: 1em; text-indent: 2em; line-height: 1.8; }
+    </style>
+</head>
+<body class="font-sans bg-emerald-50 text-gray-800 leading-loose flex flex-col min-h-screen">
+    <div id="navbar-container"></div>
+
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-5xl" id="work-detail-content">
+        <div class="text-center py-20 text-gray-500">
+            <i class="fa-solid fa-spinner fa-spin text-4xl text-primary mb-4"></i><br>กำลังโหลดข้อมูลผลงาน...
+        </div>
+    </main>
+
+    <div id="complete-unlock-container" class="container mx-auto px-4 mb-8 max-w-5xl flex justify-center"></div>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./js/app.js"></script>
+    <script type="module">
+        import { initWorkDetail } from './js/pages/workDetail.js';
+        document.addEventListener('DOMContentLoaded', () => {
+            initWorkDetail();
+        });
+    </script>
+</body>
+</html>

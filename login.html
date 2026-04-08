@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เข้าสู่ระบบ - Luminous Story</title>
+    <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Mali', 'sans-serif'], reading: ['Sarabun', 'sans-serif'] },
+                    colors: { primary: { light: '#6ee7b7', DEFAULT: '#10b981', dark: '#047857' } }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans bg-emerald-50 text-gray-800 leading-loose flex flex-col min-h-screen">
+
+    <div id="navbar-container"></div>
+
+    <main class="flex-grow flex items-center justify-center px-4 py-12">
+        <div class="bg-white p-8 md:p-10 rounded-3xl shadow-xl w-full max-w-md border border-emerald-100 transform transition-all hover:-translate-y-1">
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-100 text-primary mb-4">
+                    <i class="fa-solid fa-right-to-bracket text-2xl fa-bounce" style="--fa-animation-iteration-count: 2;"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-gray-800 leading-[1.5]">ยินดีต้อนรับกลับมา</h1>
+                <p class="text-gray-500 mt-2">เข้าสู่ระบบเพื่ออ่านและสร้างสรรค์ผลงานต่อ</p>
+            </div>
+
+            <form id="login-form" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2" for="email">อีเมล</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-envelope text-gray-400"></i>
+                        </div>
+                        <input type="email" id="email" class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="your@email.com" required>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="block text-sm font-bold text-gray-700" for="password">รหัสผ่าน</label>
+                        <a href="placeholder.html?page=forgot-password" class="text-xs text-primary hover:underline font-semibold">ลืมรหัสผ่าน?</a>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-lock text-gray-400"></i>
+                        </div>
+                        <input type="password" id="password" class="w-full pl-10 pr-12 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="••••••••" required>
+                    <button type="button" class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-primary transition-colors toggle-password">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+                <button type="submit" class="w-full bg-primary text-white font-bold py-3 px-4 rounded-xl shadow-lg hover:bg-primary-dark hover:shadow-xl transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-arrow-right-to-bracket"></i> เข้าสู่ระบบ
+                </button>
+            </form>
+
+            <div class="mt-8 text-center text-sm text-gray-600">
+                ยังไม่มีบัญชีใช่ไหม? 
+                <a href="register.html" class="text-primary font-bold hover:underline">สมัครสมาชิกเลย</a>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./js/app.js"></script>
+
+    <script type="module">
+    	import { initLogin } from './js/pages/login.js';
+    	document.addEventListener('DOMContentLoaded', () => {
+        	initLogin();
+    	});
+    </script>
+</body>
+</html>

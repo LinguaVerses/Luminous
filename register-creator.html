@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สมัครเป็น Creator | Luminous Story</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#10b981', 'primary-dark': '#059669', 'primary-light': '#ecfdf5' },
+                    fontFamily: { sans: ['Prompt', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Prompt', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col items-center justify-center p-4 relative overflow-x-hidden">
+
+    <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-emerald-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-teal-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+
+    <div class="w-full max-w-xl bg-white rounded-3xl shadow-xl border border-emerald-50 relative z-10 overflow-hidden">
+        
+        <div class="bg-gradient-to-r from-emerald-400 to-teal-500 p-8 text-center relative">
+            <a href="guide-creator.html" class="absolute top-6 left-6 text-white hover:text-emerald-100 transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-arrow-left"></i> กลับ
+            </a>
+            <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <i class="fa-solid fa-pen-nib text-3xl text-primary fa-bounce"></i>
+            </div>
+            <h1 class="text-2xl font-bold text-white mb-2">อัปเกรดเป็น Creator</h1>
+            <p class="text-emerald-50 text-sm">เริ่มต้นเส้นทางการเป็นนักเขียนและสร้างรายได้กับเรา</p>
+        </div>
+
+        <div class="p-8">
+            <form id="creator-register-form" class="space-y-6">
+                
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">นามปากกา (Pen Name) <span class="text-red-500">*</span></label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-signature text-gray-400"></i>
+                        </div>
+                        <input type="text" id="reg-penname" required class="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="ตั้งนามปากกาที่ให้ทุกคนจดจำ">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">แนะนำตัวสั้นๆ (Bio)</label>
+                    <div class="relative">
+                        <textarea id="reg-bio" rows="3" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all resize-none" placeholder="บอกเล่าสไตล์การเขียนของคุณ หรือทักทายนักอ่าน..."></textarea>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-1 text-right">ไม่บังคับ (สามารถแก้ไขได้ภายหลัง)</p>
+                </div>
+
+                <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100">
+                    <label class="flex items-start gap-3 cursor-pointer group">
+                        <div class="relative flex items-center justify-center mt-0.5">
+                            <input type="checkbox" id="accept-terms" required class="peer sr-only">
+                            <div class="w-5 h-5 border-2 border-emerald-300 rounded bg-white peer-checked:bg-primary peer-checked:border-primary transition-all flex items-center justify-center">
+                                <i class="fa-solid fa-check text-white text-xs opacity-0 peer-checked:opacity-100 transition-opacity"></i>
+                            </div>
+                        </div>
+                        <span class="text-sm text-gray-600">
+                            ข้าพเจ้ายอมรับ <a href="#" class="text-primary font-bold hover:underline">ข้อตกลงและเงื่อนไขการเป็น Creator</a> รวมถึงนโยบายการแบ่งรายได้ของแพลตฟอร์ม
+                        </span>
+                    </label>
+                </div>
+
+                <button type="submit" id="btn-submit-creator" class="w-full py-4 bg-primary text-white font-bold text-lg rounded-xl shadow-md hover:bg-primary-dark hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-rocket"></i> ยืนยันการอัปเกรดบัญชี
+                </button>
+
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="./js/pages/register-creator.js"></script>
+</body>
+</html>

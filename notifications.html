@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>การแจ้งเตือน - Luminous Story</title>
+    <link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Mali', 'sans-serif'], reading: ['Sarabun', 'sans-serif'] },
+                    colors: { primary: { light: '#6ee7b7', DEFAULT: '#10b981', dark: '#047857' } }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans bg-emerald-50 text-gray-800 leading-loose flex flex-col min-h-screen">
+    
+    <div id="navbar-container"></div>
+
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-4xl">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 border-b-2 border-emerald-100 pb-4 gap-4">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-800 flex items-center gap-3">
+                    <i class="fa-solid fa-bell text-primary fa-shake" style="--fa-animation-duration: 2s;"></i> กระดิ่งแจ้งเตือน
+                </h1>
+                <p class="text-gray-500 mt-1">อัปเดตทุกความเคลื่อนไหวที่สำคัญของคุณ</p>
+            </div>
+            <button id="btn-mark-all-read" class="px-4 py-2 bg-white text-emerald-600 border border-emerald-200 rounded-full text-sm font-bold hover:bg-emerald-50 transition-colors shadow-sm flex items-center gap-2">
+                <i class="fa-solid fa-check-double"></i> อ่านทั้งหมดแล้ว
+            </button>
+        </div>
+
+        <div id="notifications-list" class="space-y-4 mb-10">
+            <div class="text-center py-20 text-gray-500 bg-white rounded-3xl shadow-sm border border-emerald-50">
+                <i class="fa-solid fa-spinner fa-spin text-4xl text-primary mb-4"></i><br>กำลังโหลดการแจ้งเตือน...
+            </div>
+        </div>
+
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./js/app.js"></script>
+    <script type="module" src="./js/pages/notifications.js"></script>
+</body>
+</html>
