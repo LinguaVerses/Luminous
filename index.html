@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luminous Story - Vertical Animation</title>
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Mali', 'sans-serif'],
+                        reading: ['Sarabun', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            light: '#6ee7b7',
+                            DEFAULT: '#10b981',
+                            dark: '#047857',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans bg-emerald-50 text-gray-800 leading-loose">
+
+    <div id="navbar-container"></div>
+
+    <main id="home-content" class="min-h-screen"></main>
+
+    <!--<div id="footer-container"></div>-->
+
+    <script type="module" src="./js/app.js"></script>
+    <script type="module">
+        // เรียกใช้ฟังก์ชันสร้างหน้า Home
+        import { initHome } from './js/pages/home.js';
+        document.addEventListener('DOMContentLoaded', () => {
+            initHome();
+        });
+    </script>
+</body>
+</html>
