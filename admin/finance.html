@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>จัดการการเงิน (Admin) - Luminous Story</title>
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Mali', 'sans-serif'], reading: ['Sarabun', 'sans-serif'] },
+                    colors: { primary: { light: '#6ee7b7', DEFAULT: '#10b981', dark: '#047857' } }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans bg-emerald-50 text-gray-800 leading-loose flex flex-col min-h-screen">
+    
+    <div id="navbar-container"></div>
+
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-7xl">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 border-b-2 border-emerald-100 pb-4 gap-4">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-800 flex items-center gap-3">
+                    <i class="fa-solid fa-vault text-primary fa-bounce" style="--fa-animation-iteration-count: 2;"></i> ระบบจัดการการเงิน (Finance)
+                </h1>
+                <p class="text-gray-500 mt-1">ตรวจสอบและอนุมัติรายการเติมกุญแจของผู้ใช้งาน</p>
+            </div>
+            
+            <div class="flex bg-white rounded-full shadow-sm border border-emerald-100 p-1">
+                <button id="filter-pending" class="px-6 py-2 rounded-full font-bold text-sm bg-yellow-400 text-yellow-900 transition-colors shadow-sm">รอตรวจสอบ</button>
+                <button id="filter-approved" class="px-6 py-2 rounded-full font-bold text-sm text-gray-500 hover:text-primary transition-colors">อนุมัติแล้ว</button>
+                <button id="filter-all" class="px-6 py-2 rounded-full font-bold text-sm text-gray-500 hover:text-primary transition-colors">ทั้งหมด</button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-yellow-200 flex items-center gap-4 relative overflow-hidden">
+                <div class="absolute -right-4 -top-4 bg-yellow-50 w-24 h-24 rounded-full z-0"></div>
+                <div class="w-14 h-14 rounded-full bg-yellow-100 text-yellow-500 flex items-center justify-center text-2xl shadow-inner z-10">
+                    <i class="fa-solid fa-hourglass-half fa-spin-pulse"></i>
+                </div>
+                <div class="z-10">
+                    <p class="text-sm text-gray-500 font-bold">รอตรวจสอบ</p>
+                    <h3 class="text-2xl font-black text-gray-800" id="summary-pending">0 <span class="text-sm font-normal text-gray-500">รายการ</span></h3>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-emerald-200 flex items-center gap-4 relative overflow-hidden">
+                <div class="absolute -right-4 -top-4 bg-emerald-50 w-24 h-24 rounded-full z-0"></div>
+                <div class="w-14 h-14 rounded-full bg-emerald-100 text-primary flex items-center justify-center text-2xl shadow-inner z-10">
+                    <i class="fa-solid fa-check-double"></i>
+                </div>
+                <div class="z-10">
+                    <p class="text-sm text-gray-500 font-bold">อนุมัติแล้ววันนี้</p>
+                    <h3 class="text-2xl font-black text-gray-800" id="summary-approved">0 <span class="text-sm font-normal text-gray-500">รายการ</span></h3>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-primary to-primary-dark p-6 rounded-3xl shadow-md text-white flex items-center gap-4 relative overflow-hidden">
+                <i class="fa-solid fa-coins absolute -right-6 -bottom-6 text-7xl text-white/10 transform -rotate-12"></i>
+                <div class="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center text-2xl shadow-inner z-10">
+                    <i class="fa-solid fa-sack-dollar fa-beat-fade"></i>
+                </div>
+                <div class="z-10">
+                    <p class="text-sm text-emerald-100 font-bold">ยอดเงินเข้าวันนี้</p>
+                    <h3 class="text-2xl font-black" id="summary-income">0.00 <span class="text-sm font-normal text-emerald-200">THB</span></h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-sm border border-emerald-100 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-emerald-50/50 text-emerald-800 border-b border-emerald-100 text-sm">
+                            <th class="py-4 px-6 font-bold whitespace-nowrap">เวลาแจ้งโอน</th>
+                            <th class="py-4 px-6 font-bold">ผู้ใช้งาน</th>
+                            <th class="py-4 px-6 font-bold">ข้อมูลการโอน</th>
+                            <th class="py-4 px-6 font-bold">แพ็กเกจ</th>
+                            <th class="py-4 px-6 font-bold text-center">สถานะ</th>
+                            <th class="py-4 px-6 font-bold text-center">จัดการ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="topup-list" class="text-sm">
+                        <tr><td colspan="6" class="text-center py-10 text-gray-500"><i class="fa-solid fa-spinner fa-spin text-2xl mb-2 text-primary"></i><br>กำลังโหลดข้อมูล...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="../js/app.js"></script>
+    <script type="module">
+        import { initAdminFinance } from '../js/admin/finance.js';
+        document.addEventListener('DOMContentLoaded', () => {
+            initAdminFinance();
+        });
+    </script>
+</body>
+</html>
