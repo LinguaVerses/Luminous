@@ -493,7 +493,8 @@ window.openComments = async (workId) => {
 };
 
 window.shareWork = async (workId, title) => {
-    const shareUrl = `${window.location.origin}/work-detail.html?workId=${workId}`;
+    const baseUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/'));
+    const shareUrl = `${baseUrl}/work-detail.html?workId=${workId}`;
     try {
         await navigator.clipboard.writeText(shareUrl);
         Swal.fire({
