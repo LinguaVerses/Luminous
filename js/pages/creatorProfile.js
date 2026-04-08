@@ -89,7 +89,7 @@ function renderWorksGrid(worksList) {
             : '<div class="absolute top-2 right-2 bg-blue-500/90 backdrop-blur text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-sm"><i class="fa-solid fa-book"></i> Novel</div>';
 
         html += `
-            <a href="/work-detail.html?id=${work.id}" class="bg-white rounded-2xl shadow-sm border border-emerald-50 overflow-hidden hover:shadow-lg transition-all duration-300 group flex flex-col h-full cursor-pointer">
+            <a href="work-detail.html?id=${work.id}" class="bg-white rounded-2xl shadow-sm border border-emerald-50 overflow-hidden hover:shadow-lg transition-all duration-300 group flex flex-col h-full cursor-pointer">
                 <div class="relative aspect-[3/4] overflow-hidden bg-gray-100">
                     <img src="${work.coverImage || 'https://placehold.co/400x600/10b981/ffffff?text=Cover'}" alt="Cover" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
