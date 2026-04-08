@@ -114,11 +114,11 @@ async function renderGrid(items, tabName) {
         const typeBadge = '<div class="absolute top-2 right-2 bg-rose-500/90 backdrop-blur text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-sm"><i class="fa-solid fa-film"></i> Animation</div>';
         // ข้อความปุ่มตามบริบท
         let actionBtnText = "ดูต่อ";
-        let actionUrl = `/works.html?workId=${item.workId}&epId=${item.episodeId || ''}`;
+        let actionUrl = `works.html?workId=${item.workId}&epId=${item.episodeId || ''}`;
         
         if (tabName === 'bookmarks') {
             actionBtnText = "หน้ารายละเอียด";
-            actionUrl = `/work-detail.html?id=${item.workId}`;
+            actionUrl = `work-detail.html?id=${item.workId}`;
         }
 
         html += `
