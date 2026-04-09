@@ -85,19 +85,15 @@ export async function initHome() {
     try {
         // 1️⃣ ดึงข้อมูล Collection: works โดยเรียงตาม updatedAt ล่าสุด
         const worksRef = collection(db, "works");
-        // ✨ ดึงข้อมูลโดยเรียงตามเวลาที่อัปเดตล่าสุด (ไม่ต้องใช้ where เพื่อเลี่ยงปัญหา Composite Index ที่ทำให้งานใหม่หาย)
-        const qWorks = query(worksRef, orderBy("updatedAt", "desc"), limit(50)); 
+        // ✨ ดึงข้อมูลโดยใช้ where คู่กับ orderBy ได้อย่างปลอดภัยเพราะคุณมี Index แล้ว!
+        const qWorks = query(worksRef, where("published", "==", true), orderBy("updatedAt", "desc"), limit(40)); 
         const snapWorksRaw = await getDocs(qWorks);
 
-        // 2️⃣ กรองข้อมูล: ดึงผลงานแอนิเมชันล่าสุด จำกัดสูงสุด 10 เรื่อง
+        // 2️⃣ กรองข้อมูล: ดึงผลงานแอนิเมชันล่าสุด จำกัด 10 เรื่อง (โค้ดชุดนี้จะไม่มีการจำกัด 1 ครีเอเตอร์ = 1 เรื่องอีกต่อไป)
         const topWorks = [];
 
         for (const docSnap of snapWorksRaw.docs) {
             const work = docSnap.data();
-            
-            // ✨ เช็กสถานะ published ในบรรทัดนี้แทน
-            if (work.published !== true) continue;
-            
             const t = work.type;
 
             // กรองเอาเฉพาะ Animation
