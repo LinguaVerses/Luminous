@@ -101,7 +101,7 @@ function createWorkCard(work, aspectClass) {
                     <span><i class="fa-solid fa-eye text-gray-300"></i> ${work.views ? work.views.toLocaleString() : 0}</span>
                 </p>
                 <div class="mt-auto grid grid-cols-3 gap-2">
-                    <a href="/creator/episodes.html?workId=${work.workId}" class="col-span-1 bg-emerald-50 text-primary text-center font-bold py-2 rounded-lg hover:bg-primary hover:text-white transition-colors text-xs md:text-sm" title="จัดการตอน">
+                    <a href="episodes.html?workId=${work.workId}" class="col-span-1 bg-emerald-50 text-primary text-center font-bold py-2 rounded-lg hover:bg-primary hover:text-white transition-colors text-xs md:text-sm" title="จัดการตอน">
                         <i class="fa-solid fa-list-ul"></i>
                     </a>
                     <button class="edit-work-btn col-span-1 bg-gray-50 text-gray-600 text-center font-bold py-2 rounded-lg hover:bg-gray-200 transition-colors text-xs md:text-sm" data-id="${work.workId}" title="แก้ไข">
