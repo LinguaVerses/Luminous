@@ -84,28 +84,27 @@ export async function initHome() {
 
     try {
         // 1️⃣ ดึงข้อมูล Collection: works โดยเรียงตาม updatedAt ล่าสุด
-        // ⚠️ หมายเหตุ: คุณต้องไปสร้าง Composite Index ใน Firebase ให้กับ fields: (published: ASC, updatedAt: DESC) ด้วยนะครับ
         const worksRef = collection(db, "works");
-        const qWorks = query(worksRef, where("published", "==", true), orderBy("updatedAt", "desc"), limit(30)); 
+        // ✨ ดึงข้อมูลโดยเรียงตามเวลาที่อัปเดตล่าสุด (ไม่ต้องใช้ where เพื่อเลี่ยงปัญหา Composite Index ที่ทำให้งานใหม่หาย)
+        const qWorks = query(worksRef, orderBy("updatedAt", "desc"), limit(50)); 
         const snapWorksRaw = await getDocs(qWorks);
 
-        // 2️⃣ กรองข้อมูล: 1 Creator = 1 Work และจำกัดสูงสุด 10 เรื่อง
-        const uniqueCreators = new Set();
+        // 2️⃣ กรองข้อมูล: ดึงผลงานแอนิเมชันล่าสุด จำกัดสูงสุด 10 เรื่อง
         const topWorks = [];
 
         for (const docSnap of snapWorksRaw.docs) {
             const work = docSnap.data();
+            
+            // ✨ เช็กสถานะ published ในบรรทัดนี้แทน
+            if (work.published !== true) continue;
+            
             const t = work.type;
 
             // กรองเอาเฉพาะ Animation
             if (t !== "animation" && t !== "shot-animation") continue;
 
-            // ตรวจสอบว่ามี Creator คนนี้ใน Set หรือยัง ถ้ายังไม่มีให้เพิ่มเข้าไป
-            if (!uniqueCreators.has(work.creatorId)) {
-                uniqueCreators.add(work.creatorId);
-                work.id = docSnap.id; // เก็บ id งานไว้ใช้ต่อ
-                topWorks.push(work);
-            }
+            work.id = docSnap.id; // เก็บ id งานไว้ใช้ต่อ
+            topWorks.push(work);
 
             // ถ้าได้ครบ 10 เรื่องแล้วให้หยุดลูป
             if (topWorks.length === 10) break;
@@ -273,6 +272,7 @@ function setupYouTubePlayers() {
                     'modestbranding': 1, 'playsinline': 1, 'rel': 0, 'mute': 1,
                     'start': startSec, // เริ่มเล่นวินาทีที่กำหนด
                     'end': endSec,      // หยุดเล่นเมื่อถึงวินาทีที่กำหนด
+                    'enablejsapi': 1,   // ✨ เพิ่มพารามิเตอร์นี้เพื่อเปิดสิทธิ์ API ให้สมบูรณ์ แก้ Error: postMessage
 		    'origin': window.location.origin // แก้ Error postMessage บน localhost
                 },
                 events: {
