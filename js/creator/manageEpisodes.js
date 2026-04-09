@@ -223,13 +223,19 @@ function setupModal() {
             try {
                 if (editId) {
                     await updateDoc(doc(db, `works/${workId}/episodes`, editId), epData);
+                    // ✨ อัปเดตเวลาของ "เรื่องหลัก" (Work) ด้วย เพื่อให้เรื่องนี้ถูกดันขึ้นบนสุดในหน้า Home
+                    await updateDoc(doc(db, "works", workId), { 
+                        updatedAt: serverTimestamp() 
+                    });
                 } else {
                     epData.createdAt = serverTimestamp();
                     epData.views = 0;
                     await addDoc(collection(db, `works/${workId}/episodes`), epData);
                     
+                    // ✨ อัปเดตเวลา (updatedAt) ของเรื่องหลักพร้อมกับบวกจำนวนตอน เพื่อดันขึ้นบนสุดในหน้า Home
                     await updateDoc(doc(db, "works", workId), { 
-                        totalEpisodes: (parentWork.totalEpisodes || 0) + 1 
+                        totalEpisodes: (parentWork.totalEpisodes || 0) + 1,
+                        updatedAt: serverTimestamp()
                     });
                     parentWork.totalEpisodes = (parentWork.totalEpisodes || 0) + 1;
                 }
