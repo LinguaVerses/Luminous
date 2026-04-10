@@ -48,7 +48,8 @@ export async function initHome() {
             }
             .video-info {
                 position: absolute;
-                bottom: calc(80px + env(safe-area-inset-bottom));
+		bottom: 80px;
+                /*bottom: calc(80px + env(safe-area-inset-bottom));*/
                 left: 15px;
                 right: 70px;
                 color: white;
@@ -57,7 +58,8 @@ export async function initHome() {
             }
             .action-buttons {
                 position: absolute;
-                bottom: calc(80px + env(safe-area-inset-bottom));
+		bottom: 80px;
+                /*bottom: calc(80px + env(safe-area-inset-bottom));*/
                 right: 10px;
                 display: flex;
                 flex-direction: column;
