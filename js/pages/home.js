@@ -21,7 +21,7 @@ export async function initHome() {
         <style>
             ::-webkit-scrollbar { display: none; }
             .feed-container {
-                height: 100vh;
+                height: calc(100dvh - 60px);
                 width: 100%;
                 max-width: 450px; /* ขนาดจำลองมือถือ */
                 margin: 0 auto;
@@ -31,7 +31,7 @@ export async function initHome() {
                 position: relative;
             }
             .video-item {
-                height: 100vh;
+                height: calc(100dvh - 60px);
                 width: 100%;
                 scroll-snap-align: start;
                 position: relative;
@@ -48,7 +48,7 @@ export async function initHome() {
             }
             .video-info {
                 position: absolute;
-                bottom: 80px;
+                bottom: calc(80px + env(safe-area-inset-bottom));
                 left: 15px;
                 right: 70px;
                 color: white;
@@ -57,7 +57,7 @@ export async function initHome() {
             }
             .action-buttons {
                 position: absolute;
-                bottom: 80px;
+                bottom: calc(80px + env(safe-area-inset-bottom));
                 right: 10px;
                 display: flex;
                 flex-direction: column;
