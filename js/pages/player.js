@@ -156,6 +156,10 @@ function initYouTubePlayer(ytId, epData) {
         return;
     }
 
+    // หาก API โหลดเสร็จอยู่แล้ว ให้สร้าง Player ได้เลย (ป้องกันอาการโหลดค้าง)
+    createPlayer(ytId, epData);
+}
+
 function createPlayer(ytId, epData) {
     ytPlayer = new YT.Player('yt-player', {
         videoId: ytId,
