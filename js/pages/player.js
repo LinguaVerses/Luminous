@@ -177,8 +177,14 @@ function createPlayer(ytId, epData) {
         },
         events: {
             'onReady': (event) => {
-                event.target.mute(); // ย้ำการปิดเสียง
-                event.target.playVideo(); // สั่งเล่นทันที
+                event.target.mute(); // ต้อง Mute ก่อนเล่นเสมอสำหรับ Mobile
+                // ทดลองใช้ Promise เพื่อดูว่าโดนบล็อกหรือไม่
+                const playPromise = event.target.playVideo();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.log("Autoplay was prevented, waiting for user interaction.");
+                    });
+                }
                 startPreviewChecker(epData);
             },
             'onStateChange': (event) => {
