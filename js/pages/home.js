@@ -22,7 +22,7 @@ export async function initHome() {
             ::-webkit-scrollbar { display: none; }
             .feed-container {
                 height: calc(100dvh - 60px);
-                width: 100%;
+                width: 100vw;
                 max-width: 100%;
                 margin: 0 auto;
                 overflow-y: scroll;
@@ -33,6 +33,8 @@ export async function initHome() {
             .video-item {
                 height: calc(100dvh - 60px);
                 width: 100%;
+		padding: 0;
+                margin: 0;
                 scroll-snap-align: start;
                 position: relative;
                 display: flex;
@@ -45,6 +47,7 @@ export async function initHome() {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
+		display: block;
             }
             .video-info {
                 position: absolute;
