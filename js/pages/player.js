@@ -12,6 +12,7 @@ let episodes = [];
 let currentEpIndex = 0;
 let currentUser = null;
 let isPurchased = false;
+let isMuted = true; // เริ่มต้นที่ปิดเสียงเพื่อให้ Autoplay บนมือถือทำงานได้
 let timeChecker; // ตัวจับเวลาสำหรับตัดตอนจบ
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -84,6 +85,7 @@ async function loadEpisodeData(index) {
     // ผูก Event ให้ปุ่มต่างๆ
     document.getElementById('next-ep-btn').onclick = playNextEpisode;
     document.getElementById('like-btn').onclick = handleLikeEpisode;
+    document.getElementById('mute-btn').onclick = toggleMute;
 
     document.getElementById('toc-btn').onclick = () => window.location.href = `work-detail.html?id=${currentWorkId}`;
     
@@ -286,7 +288,7 @@ async function processUnlock(epData) {
             price: epData.pricePoints,
             purchasedAt: serverTimestamp()
         });
-        // 3. บันทึกประวัติ Transaction (ทำตาม Database Schema ข้อ 6) [cite: 7, 8, 9]
+        // 3. บันทึกประวัติ Transaction (ทำตาม Database Schema ข้อ 6)
         await addDoc(transactionRef, {
             amount: -epData.pricePoints,
             type: "purchase",
@@ -347,6 +349,26 @@ async function handleLikeEpisode() {
         });
     } catch (error) {
         console.error("Error liking episode:", error);
+    }
+}
+
+function toggleMute() {
+    if (!ytPlayer || typeof ytPlayer.mute !== 'function') return;
+
+    const muteIcon = document.getElementById('mute-icon');
+    const muteText = document.getElementById('mute-text');
+
+    if (isMuted) {
+        ytPlayer.unMute();
+        ytPlayer.setVolume(100);
+        muteIcon.classList.replace('fa-volume-xmark', 'fa-volume-high');
+        muteText.innerText = "ปิดเสียง";
+        isMuted = false;
+    } else {
+        ytPlayer.mute();
+        muteIcon.classList.replace('fa-volume-high', 'fa-volume-xmark');
+        muteText.innerText = "เปิดเสียง";
+        isMuted = true;
     }
 }
 
