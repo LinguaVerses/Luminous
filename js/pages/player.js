@@ -134,7 +134,9 @@ function initYouTubePlayer(ytId, epData) {
     
     if (ytPlayer) {
         // ถ้ามี Player อยู่แล้ว ให้เปลี่ยนวิดีโอ
+        ytPlayer.mute(); // ตรวจสอบว่าปิดเสียงเพื่อให้ Autoplay ทำงานบนมือถือ
         ytPlayer.loadVideoById(ytId);
+        ytPlayer.playVideo(); // สั่งเล่นทันทีสำหรับ iPhone/Android
         startPreviewChecker(epData);
         return;
     }
@@ -155,9 +157,20 @@ function initYouTubePlayer(ytId, epData) {
 function createPlayer(ytId, epData) {
     ytPlayer = new YT.Player('yt-player', {
         videoId: ytId,
-        playerVars: { 'autoplay': 1, 'controls': 1, 'modestbranding': 1, 'rel': 0, 'playsinline': 1 },
+        playerVars: { 
+            'autoplay': 1, 
+            'controls': 1, 
+            'modestbranding': 1, 
+            'rel': 0, 
+            'playsinline': 1,
+            'mute': 1 // เพิ่มเพื่อให้ iPhone ยอมรับการ Autoplay
+        },
         events: {
-            'onReady': () => startPreviewChecker(epData),
+            'onReady': (event) => {
+                event.target.mute(); // ย้ำการปิดเสียง
+                event.target.playVideo(); // สั่งเล่นทันที
+                startPreviewChecker(epData);
+            },
             'onStateChange': (event) => {
                 if (event.data === YT.PlayerState.PLAYING) {
                     startPreviewChecker(epData);
