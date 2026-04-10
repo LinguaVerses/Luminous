@@ -208,7 +208,7 @@ function createVideoElement(workId, workData, epData) {
 
     return `
         <div class="video-item" data-work-id="${workId}">
-            <div id="yt-${workId}" class="video-player" data-yt-id="${ytId}" data-start="${startSec}" data-end="${endSec}" style="pointer-events: none;"></div>
+            <div id="yt-${workId}" class="video-player" data-yt-id="${ytId}" data-start="${startSec}" data-end="${endSec}" style="pointer-events: auto;"></div>
             ${getVideoUI(workId, workData, epData)}
         </div>
     `;
@@ -264,7 +264,7 @@ function setupYouTubePlayers() {
             ytPlayers[workId] = new YT.Player(`yt-${workId}`, {
                 videoId: ytId,
                 playerVars: {
-                    'autoplay': 0, 'controls': 0, 'disablekb': 1, 'fs': 0,
+                    'autoplay': 1, 'controls': 0, 'disablekb': 1, 'fs': 0,
                     'modestbranding': 1, 'playsinline': 1, 'rel': 0, 'mute': 1,
                     'start': startSec, // เริ่มเล่นวินาทีที่กำหนด
                     'end': endSec,      // หยุดเล่นเมื่อถึงวินาทีที่กำหนด
@@ -291,6 +291,17 @@ function setupYouTubePlayers() {
                 }
             });
         }
+
+    // เพิ่มฟังก์ชันให้เมื่อผู้ใช้ "แตะ" ที่วิดีโอครั้งแรก ให้สั่งเล่นทันที (ปลดล็อกนโยบายเบราว์เซอร์)
+        item.addEventListener('click', () => {
+            const player = ytPlayers[workId];
+            if (player && typeof player.playVideo === 'function') {
+                const state = player.getPlayerState();
+                if (state !== YT.PlayerState.PLAYING) {
+                    player.playVideo();
+                }
+            }
+        });
 
         // ผูก Event ให้ปุ่มเปิด-ปิดเสียง
         const soundBtn = item.querySelector('.sound-btn');
