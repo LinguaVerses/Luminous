@@ -142,28 +142,32 @@ function initYouTubePlayer(ytId, epData) {
     }
 
     // สร้าง Player ใหม่
-    if (!window.YT) {
-        const tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        const firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        window.onYouTubeIframeAPIReady = () => { createPlayer(ytId, epData); };
-    } else {
-        createPlayer(ytId, epData);
+    if (!window.YT || !window.YT.Player) {
+        if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
+            const tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            const firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        }
+        
+        window.onYouTubeIframeAPIReady = () => {
+            createPlayer(ytId, epData);
+        };
+        return;
     }
-}
 
 function createPlayer(ytId, epData) {
     ytPlayer = new YT.Player('yt-player', {
         videoId: ytId,
         playerVars: { 
             'autoplay': 1, 
-            'controls': 1, 
+            'controls': 0, // ปิดปุ่มพื้นฐานของ YT เพื่อใช้ UI ของเราเองได้เต็มที่ 
             'modestbranding': 1, 
             'rel': 0, 
             'playsinline': 1,
-            'mute': 1 // เพิ่มเพื่อให้ iPhone ยอมรับการ Autoplay
+            'mute': 1,
+            'enablejsapi': 1, // เปิดใช้งาน API เต็มรูปแบบ
+            'origin': window.location.origin // ส่งชื่อโดเมน (GitHub) ไปยืนยันตัวตน
         },
         events: {
             'onReady': (event) => {
