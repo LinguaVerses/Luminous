@@ -39,6 +39,7 @@
             flex-direction: column;
             justify-content: space-between;
             padding: 20px 15px;
+	    pointer-events: none;
         }
         /* หน้าจอ Blur เมื่อติดเหรียญ */
         .unlock-overlay {
@@ -68,32 +69,35 @@
 
         <div class="player-ui">
             <div class="flex justify-between items-center drop-shadow-md">
-                <a href="index.html" class="w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/80">
+                <a href="index.html" class="w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/80 pointer-events-auto">
                     <i class="fa-solid fa-chevron-left"></i>
                 </a>
                 <div class="text-center flex-1 px-4">
                     <h1 class="text-sm font-bold truncate" id="player-title">กำลังโหลด...</h1>
                 </div>
-                <button id="next-ep-btn" class="w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/80" title="ตอนถัดไป">
+                <button id="next-ep-btn" class="w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/80 pointer-events-auto" title="ตอนถัดไป">
                     <i class="fa-solid fa-forward-step"></i>
                 </button>
             </div>
 
             <div class="flex justify-end items-end h-full pb-10">
                 <div class="flex flex-col gap-5">
-                    <button id="like-btn" class="flex flex-col items-center">
+                    <button id="like-btn" class="flex flex-col items-center pointer-events-auto">
                         <div class="w-12 h-12 bg-black/40 rounded-full flex items-center justify-center mb-1">
-                            <i id="like-icon" class="fa-solid fa-heart text-xl transition-colors duration-300"></i>
+                    
+                        <i id="like-icon" class="fa-solid fa-heart text-xl transition-colors duration-300"></i>
                         </div>
                         <span id="like-count" class="text-xs font-bold shadow-black drop-shadow-lg">0</span>
                     </button>
-		    <button id="mute-btn" class="flex flex-col items-center">
+             
+                    <button id="mute-btn" class="flex flex-col items-center pointer-events-auto">
                         <div class="w-12 h-12 bg-black/40 rounded-full flex items-center justify-center mb-1">
                             <i id="mute-icon" class="fa-solid fa-volume-xmark text-xl"></i>
                         </div>
                         <span id="mute-text" class="text-xs font-bold drop-shadow-lg">เปิดเสียง</span>
                     </button>
-                    <button id="toc-btn" class="flex flex-col items-center">
+
+                    <button id="toc-btn" class="flex flex-col items-center pointer-events-auto">
                         <div class="w-12 h-12 bg-black/40 rounded-full flex items-center justify-center mb-1">
                             <i class="fa-solid fa-list text-xl"></i>
                         </div>
