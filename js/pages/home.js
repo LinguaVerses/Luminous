@@ -23,7 +23,7 @@ export async function initHome() {
             .feed-container {
                 height: calc(100dvh - 60px);
                 width: 100%;
-                max-width: 450px; /* ขนาดจำลองมือถือ */
+                max-width: 100%;
                 margin: 0 auto;
                 overflow-y: scroll;
                 scroll-snap-type: y mandatory;
@@ -48,7 +48,8 @@ export async function initHome() {
             }
             .video-info {
                 position: absolute;
-		bottom: 80px;
+		bottom: 25px;
+		padding-bottom: env(safe-area-inset-bottom); /* เพิ่มระยะเผื่อสำหรับแถบโฮมของ iPhone */
                 /*bottom: calc(80px + env(safe-area-inset-bottom));*/
                 left: 15px;
                 right: 70px;
@@ -58,7 +59,8 @@ export async function initHome() {
             }
             .action-buttons {
                 position: absolute;
-		bottom: 80px;
+		bottom: 25px;
+		padding-bottom: env(safe-area-inset-bottom);
                 /*bottom: calc(80px + env(safe-area-inset-bottom));*/
                 right: 10px;
                 display: flex;
