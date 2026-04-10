@@ -18,7 +18,7 @@
         .player-container {
             position: relative;
             width: 100%;
-            height: 100vh;
+            height: 100dvh;
             max-width: 450px; /* ขนาดมือถือ */
             margin: 0 auto;
             background-color: #111;
@@ -86,6 +86,12 @@
                             <i id="like-icon" class="fa-solid fa-heart text-xl transition-colors duration-300"></i>
                         </div>
                         <span id="like-count" class="text-xs font-bold shadow-black drop-shadow-lg">0</span>
+                    </button>
+		    <button id="mute-btn" class="flex flex-col items-center">
+                        <div class="w-12 h-12 bg-black/40 rounded-full flex items-center justify-center mb-1">
+                            <i id="mute-icon" class="fa-solid fa-volume-xmark text-xl"></i>
+                        </div>
+                        <span id="mute-text" class="text-xs font-bold drop-shadow-lg">เปิดเสียง</span>
                     </button>
                     <button id="toc-btn" class="flex flex-col items-center">
                         <div class="w-12 h-12 bg-black/40 rounded-full flex items-center justify-center mb-1">
