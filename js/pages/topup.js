@@ -4,9 +4,9 @@ import { collection, addDoc, serverTimestamp, doc, getDoc, query, where, getDocs
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
 let currentUser = null;
-let selectedPrice = 199; // Default เลือกอันที่ขายดี
-let selectedKeys = 2200; // ตามเรตราคาใหม่ Fan Plan
-let selectedPlan = 'Fan Plan';
+let selectedPrice = 50;
+let selectedKeys = 50;
+let selectedPlan = 'One-time 50';
 let isFirstTimeTopup = false; // เอาไว้เช็คโบนัสครั้งแรก
 
 export function initTopup() {
