@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     username: username,
                     email: email,
                     role: 'user', // กำหนดค่าเริ่มต้นเป็น user เสมอ
-                    points: 30, // 🎁 New User Starter Pack ตามแผน
+                    points: 12, // 🎁 New User Starter Pack ตามแผน
                     photoURL: "", // 🟢 เก็บรูปโปรไฟล์ที่นี่ที่เดียว
                     isActive: true,
                     emailBonusClaimed: false, 
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 Swal.fire({
                     icon: 'success',
                     title: 'สมัครสมาชิกสำเร็จ!',
-                    text: 'ยินดีต้อนรับสู่ Luminous Story คุณได้รับ 30 กุญแจ เป็นของขวัญต้อนรับค่ะ 🎁',
+                    text: 'ยินดีต้อนรับสู่ Luminous Story คุณได้รับ 12 กุญแจ เป็นของขวัญต้อนรับค่ะ 🎁',
                     confirmButtonColor: '#10b981',
                     timer: 3000,
                     showConfirmButton: false
