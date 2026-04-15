@@ -169,6 +169,7 @@ function setupModal() {
         if (modal.classList.contains('hidden')) {
             form.reset();
             document.getElementById('work-desc').innerHTML = '';
+            document.querySelectorAll('input[name="primary-genre"], input[name="work-tags"]').forEach(el => el.checked = false);
             form.removeAttribute('data-edit-id');
             document.getElementById('modal-title').innerHTML = '<i class="fa-solid fa-pen-to-square text-primary"></i> ข้อมูลผลงาน';
         } else {
@@ -204,24 +205,31 @@ function setupModal() {
             const title = document.getElementById('work-title').value;
             const type = document.getElementById('work-type').value; 
             const cover = document.getElementById('work-cover').value;
-            const mainGenre = document.getElementById('work-main-genre').value;
-            const tone = document.getElementById('work-tone').value;
-            const theme = document.getElementById('work-theme').value;
-            const audience = document.getElementById('work-audience').value;
-            const style = document.getElementById('work-style').value;
+            // รวบรวมหมวดหลัก (Primary Genre)
+            const primaryGenres = Array.from(document.querySelectorAll('input[name="primary-genre"]:checked')).map(el => el.value);
+            // รวบรวมแท็ก (Tags)
+            const tags = Array.from(document.querySelectorAll('input[name="work-tags"]:checked')).map(el => el.value);
+
             const status = document.getElementById('work-status').value;
             const published = document.querySelector('input[name="work-publish"]:checked').value === "true";
             const description = document.getElementById('work-desc').innerHTML;
 
+            // ตรวจสอบจำนวนการเลือกเบื้องต้น
+            if (primaryGenres.length < 1 || primaryGenres.length > 2) {
+                Swal.fire('แจ้งเตือน', 'กรุณาเลือกหมวดหลัก 1-2 หมวด', 'warning');
+                return;
+            }
+            if (tags.length < 3 || tags.length > 5) {
+                Swal.fire('แจ้งเตือน', 'กรุณาเลือกแท็ก 3-5 อัน', 'warning');
+                return;
+            }
+
             const workData = {
                 title: title,
-                type: type, // จะส่งไปเป็น animation หรือ shot-animation ตามที่คุณแก้ HTML
+                type: type,
                 coverImage: cover,
-                mainGenre: mainGenre,
-                tone: tone,
-                theme: theme,
-                audience: audience,
-                style: style,
+                primaryGenres: primaryGenres,
+                tags: tags,
                 status: status,
                 published: published,
                 description: description,
@@ -258,11 +266,17 @@ window.editWork = (id) => {
 
     document.getElementById('work-title').value = work.title || '';
     document.getElementById('work-cover').value = work.coverImage || '';
-    document.getElementById('work-main-genre').value = work.mainGenre || "";
-    document.getElementById('work-tone').value = work.tone || "Cute";
-    document.getElementById('work-theme').value = work.theme || "Animal";
-    document.getElementById('work-audience').value = work.audience || "Kids";
-    document.getElementById('work-style').value = work.style || "Anime Style";
+    // ติ๊กเลือก Checkbox ตามข้อมูลที่มี
+    const savedGenres = work.primaryGenres || [];
+    const savedTags = work.tags || [];
+
+    document.querySelectorAll('input[name="primary-genre"]').forEach(el => {
+        el.checked = savedGenres.includes(el.value);
+    });
+    document.querySelectorAll('input[name="work-tags"]').forEach(el => {
+        el.checked = savedTags.includes(el.value);
+    });
+
     document.getElementById('work-status').value = work.status || "Ongoing";
     document.getElementById('work-type').value = work.type || "animation"; 
 
