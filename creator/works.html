@@ -97,64 +97,136 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div class="space-y-6 bg-emerald-50/50 p-4 rounded-2xl border border-emerald-100">
                     <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">หมวดหมู่หลัก</label>
-                        <select id="work-main-genre" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none bg-white">
-                            <option value="Action">Action (แอ็กชัน)</option>
-                            <option value="Adventure">Adventure (ผจญภัย)</option>
-                            <option value="Comedy">Comedy (ตลก)</option>
-                            <option value="Fantasy">Fantasy (แฟนตาซี)</option>
-                            <option value="Sci-Fi">Sci-Fi (ไซไฟ)</option>
-                            <option value="Romance">Romance (โรแมนติก)</option>
-                            <option value="Drama">Drama (ดราม่า)</option>
-                            <option value="Horror">Horror (สยองขวัญ)</option>
-                            <option value="Mystery">Mystery (สืบสวน)</option>
-                            <option value="Slice of Life">Slice of Life (ชีวิตประจำวัน)</option>
-                            <option value="Family / Kids">Family / Kids (เด็ก / ครอบครัว)</option>
-                            <option value="Educational">Educational (ความรู้ / สาระ)</option>
-                        </select>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2">โทนเรื่อง</label>
-                            <select id="work-tone" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none bg-white">
-                                <option value="Cute">Cute / น่ารัก</option>
-                                <option value="Dark">Dark / ดาร์ก</option>
-                                <option value="Emotional">Emotional / ซึ้ง</option>
-                                <option value="Lighthearted">Lighthearted / เบาสมอง</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2">ธีมเนื้อหา</label>
-                            <select id="work-theme" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none bg-white">
-                                <option value="Animal">Animal (สัตว์)</option>
-                                <option value="Magic">Magic (เวทมนตร์)</option>
-                                <option value="Supernatural">Supernatural (เหนือธรรมชาติ)</option>
-                                <option value="School">School (โรงเรียน)</option>
-                                <option value="Friendship">Friendship (มิตรภาพ)</option>
-                                <option value="Adventure Quest">Adventure Quest (ภารกิจ)</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2">กลุ่มผู้ชม</label>
-                            <select id="work-audience" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none bg-white">
-                                <option value="Kids">Kids</option>
-                                <option value="Teen">Teen</option>
-                                <option value="Adult">Adult</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2">สไตล์</label>
-                            <select id="work-style" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none bg-white">
-                                <option value="Anime Style">Anime Style</option>
-                                <option value="Western Cartoon">Western Cartoon</option>
-                                <option value="3D Animation">3D Animation</option>
-                                <option value="2D Animation">2D Animation</option>
-                            </select>
+                        <label class="block text-sm font-bold text-gray-800 mb-2">
+                            <i class="fa-solid fa-star text-amber-500"></i> หมวดหลัก (Primary Genre) 
+                            <span class="text-[10px] font-normal text-gray-500 ml-1">(เลือก 1–2 อย่าง)</span>
+                        </label>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2" id="primary-genre-container">
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-xs">
+                                <input type="checkbox" name="primary-genre" value="Action" class="w-4 h-4 rounded text-primary focus:ring-primary"> Action
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-xs">
+                                <input type="checkbox" name="primary-genre" value="Adventure" class="w-4 h-4 rounded text-primary focus:ring-primary"> Adventure(ผจญภัย)
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-xs">
+                                <input type="checkbox" name="primary-genre" value="Comedy" class="w-4 h-4 rounded text-primary focus:ring-primary"> Comedy(ตลก)
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-xs">
+                                <input type="checkbox" name="primary-genre" value="Drama" class="w-4 h-4 rounded text-primary focus:ring-primary"> Drama
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-xs">
+                                <input type="checkbox" name="primary-genre" value="Fantasy" class="w-4 h-4 rounded text-primary focus:ring-primary"> Fantasy
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-xs">
+                                <input type="checkbox" name="primary-genre" value="Horror" class="w-4 h-4 rounded text-primary focus:ring-primary"> Horror(สยองขวัญ)
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-xs">
+                                <input type="checkbox" name="primary-genre" value="Mystery" class="w-4 h-4 rounded text-primary focus:ring-primary"> Mystery(ลึกลับ/สืบสวน)
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-xs">
+                                <input type="checkbox" name="primary-genre" value="Romance" class="w-4 h-4 rounded text-primary focus:ring-primary"> Romance
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-xs">
+                                <input type="checkbox" name="primary-genre" value="Sci-Fi" class="w-4 h-4 rounded text-primary focus:ring-primary"> Sci-Fi
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-xs">
+                                <input type="checkbox" name="primary-genre" value="Slice of Life" class="w-4 h-4 rounded text-primary focus:ring-primary"> Slice of Life(ชีวิตประจำวัน)
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-xs">
+                                <input type="checkbox" name="primary-genre" value="Thriller" class="w-4 h-4 rounded text-primary focus:ring-primary"> Thriller(ระทึกขวัญ)
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-xs">
+                                <input type="checkbox" name="primary-genre" value="Supernatural" class="w-4 h-4 rounded text-primary focus:ring-primary"> Supernatural(เหนือธรรมชาติ)
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-xs">
+                                <input type="checkbox" name="primary-genre" value="Historical" class="w-4 h-4 rounded text-primary focus:ring-primary"> Historical(ย้อนยุค/ประวัติศาสตร์)
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-xs">
+                                <input type="checkbox" name="primary-genre" value="Crime" class="w-4 h-4 rounded text-primary focus:ring-primary"> Crime(อาชญากรรม)
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-xs">
+                                <input type="checkbox" name="primary-genre" value="Psychological" class="w-4 h-4 rounded text-primary focus:ring-primary"> Psychological(จิตวิทยา)
+                            </label>
                         </div>
                     </div>
-		</div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-gray-800 mb-2">
+                            <i class="fa-solid fa-tags text-indigo-500"></i> แท็ก (Tags) 
+                            <span class="text-[10px] font-normal text-gray-500 ml-1">(เลือก 3–5 อัน)</span>
+                        </label>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2" id="tags-container">
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-[11px]">
+                                <input type="checkbox" name="work-tags" value="BL / Boy Love" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"> BL / Boy Love
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-[11px]">
+                                <input type="checkbox" name="work-tags" value="GL / Girl Love" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"> GL / Girl Love
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-[11px]">
+                                <input type="checkbox" name="work-tags" value="Family" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"> Family
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-[11px]">
+                                <input type="checkbox" name="work-tags" value="Kids" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"> Kids
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-[11px]">
+                                <input type="checkbox" name="work-tags" value="Steampunk" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"> Steampunk
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-[11px]">
+                                <input type="checkbox" name="work-tags" value="Cyberpunk" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"> Cyberpunk
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-[11px]">
+                                <input type="checkbox" name="work-tags" value="Wuxia" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"> Wuxia(กำลังภายใน)
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-[11px]">
+                                <input type="checkbox" name="work-tags" value="Mythology" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"> Mythology(ตำนาน)
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-[11px]">
+                                <input type="checkbox" name="work-tags" value="Folklore" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"> Folklore(พื้นบ้าน)
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-[11px]">
+                                <input type="checkbox" name="work-tags" value="Isekai" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"> Isekai(ต่างโลก)
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-[11px]">
+                                <input type="checkbox" name="work-tags" value="Post-apocalyptic" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"> Post-apocalyptic(โลกหลังหายนะ)
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-[11px]">
+                                <input type="checkbox" name="work-tags" value="Animal" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"> Animal
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-[11px]">
+                                <input type="checkbox" name="work-tags" value="Detective" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"> Detective(นักสืบ)
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-[11px]">
+                                <input type="checkbox" name="work-tags" value="AI" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"> AI
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-[11px]">
+                                <input type="checkbox" name="work-tags" value="Superpower" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"> Superpower(พลังพิเศษ)
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-[11px]">
+                                <input type="checkbox" name="work-tags" value="Dark" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"> Dark
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-[11px]">
+                                <input type="checkbox" name="work-tags" value="Light" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"> Light
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-[11px]">
+                                <input type="checkbox" name="work-tags" value="Emotional" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"> Emotional(อารมณ์)
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-[11px]">
+                                <input type="checkbox" name="work-tags" value="Epic" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"> Epic(มหากาพย์)
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-[11px]">
+                                <input type="checkbox" name="work-tags" value="Coming-of-Age" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"> Coming-of-Age(การก้าวพ้นวัย)
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-[11px]">
+                                <input type="checkbox" name="work-tags" value="Revenge" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"> Revenge(การแก้แค้น)
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-primary transition-colors text-[11px]">
+                                <input type="checkbox" name="work-tags" value="Survival" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"> Survival(การอยู่รอด)
+                            </label>
+                        </div>
+                    </div>
+                </div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div>
