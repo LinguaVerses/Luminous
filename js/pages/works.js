@@ -11,11 +11,8 @@ let currentFilter = 'all'; // 'all', 'animation', 'shot_animation'
 // เพิ่มตัวแปรสำหรับระบบค้นหาและตัวกรอง
 let searchQuery = '';
 let statusFilter = 'all';
-let mainGenreFilter = 'all';
-let toneFilter = 'all';
-let themeFilter = 'all';
-let audienceFilter = 'all';
-let styleFilter = 'all';
+let primaryGenreFilter = 'all';
+let tagFilter = 'all';
 
 export async function initWorks() {
     // เช็ค URL parameters เผื่อกดลิงก์ "ดูทั้งหมด" มาจากหน้า Home
@@ -52,11 +49,8 @@ function setupFilterEvents() {
 // ระบบค้นหาและตัวกรอง Dropdown
     const searchInput = document.getElementById('search-input');
     const statusSelect = document.getElementById('filter-status');
-    const mainGenreSelect = document.getElementById('filter-main-genre');
-    const toneSelect = document.getElementById('filter-tone');
-    const themeSelect = document.getElementById('filter-theme');
-    const audienceSelect = document.getElementById('filter-audience');
-    const styleSelect = document.getElementById('filter-style');
+    const primaryGenreSelect = document.getElementById('filter-primary-genre');
+    const tagsSelect = document.getElementById('filter-tags');
 
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
@@ -70,33 +64,15 @@ function setupFilterEvents() {
             applyFilterAndRender();
         });
     }
-    if (mainGenreSelect) {
-        mainGenreSelect.addEventListener('change', (e) => {
-            mainGenreFilter = e.target.value;
+    if (primaryGenreSelect) {
+        primaryGenreSelect.addEventListener('change', (e) => {
+            primaryGenreFilter = e.target.value;
             applyFilterAndRender();
         });
     }
-    if (toneSelect) {
-        toneSelect.addEventListener('change', (e) => {
-            toneFilter = e.target.value;
-            applyFilterAndRender();
-        });
-    }
-    if (themeSelect) {
-        themeSelect.addEventListener('change', (e) => {
-            themeFilter = e.target.value;
-            applyFilterAndRender();
-        });
-    }
-    if (audienceSelect) {
-        audienceSelect.addEventListener('change', (e) => {
-            audienceFilter = e.target.value;
-            applyFilterAndRender();
-        });
-    }
-    if (styleSelect) {
-        styleSelect.addEventListener('change', (e) => {
-            styleFilter = e.target.value;
+    if (tagsSelect) {
+        tagsSelect.addEventListener('change', (e) => {
+            tagFilter = e.target.value;
             applyFilterAndRender();
         });
     }
@@ -135,16 +111,15 @@ function applyFilterAndRender() {
         // 3. กรองสถานะ (Status)
         const matchStatus = statusFilter === 'all' || w.status === statusFilter;
         
-        // 4. กรองหมวดหมู่หลัก (Main Genre)
-        const matchMainGenre = mainGenreFilter === 'all' || w.mainGenre === mainGenreFilter;
+        // 4. กรองหมวดหลัก (Primary Genre) - ตรวจสอบใน Array primaryGenres
+        const matchPrimaryGenre = primaryGenreFilter === 'all' || 
+            (w.primaryGenres && Array.isArray(w.primaryGenres) && w.primaryGenres.includes(primaryGenreFilter));
         
-        // 5. กรองหมวดหมู่รอง (Sub Genre)
-        const matchTone = toneFilter === 'all' || w.tone === toneFilter;
-        const matchTheme = themeFilter === 'all' || w.theme === themeFilter;
-        const matchAudience = audienceFilter === 'all' || w.audience === audienceFilter;
-        const matchStyle = styleFilter === 'all' || w.style === styleFilter;
+        // 5. กรองแท็ก (Tags) - ตรวจสอบใน Array tags
+        const matchTag = tagFilter === 'all' || 
+            (w.tags && Array.isArray(w.tags) && w.tags.includes(tagFilter));
 
-        return matchType && matchSearch && matchStatus && matchMainGenre && matchTone && matchTheme && matchAudience && matchStyle;
+        return matchType && matchSearch && matchStatus && matchPrimaryGenre && matchTag;
     });
 
     renderPage();
@@ -186,7 +161,7 @@ return `
             <div class="p-3 md:p-4 flex-grow flex flex-col">
                 <h3 class="font-bold text-sm md:text-base mb-1 line-clamp-2 group-hover:text-primary transition-colors text-gray-800" title="${work.title}">${work.title}</h3>
                 <p class="text-[10px] md:text-xs text-gray-500 mb-2 flex items-center gap-1 mt-auto pt-2">
-                    <i class="fa-solid fa-layer-group text-emerald-400"></i> ${work.mainGenre || 'ทั่วไป'}
+                    <i class="fa-solid fa-layer-group text-emerald-400"></i> ${ (work.primaryGenres && work.primaryGenres.length > 0) ? work.primaryGenres[0] : 'ทั่วไป' }
                 </p>
                 <div class="flex items-center justify-between text-[10px] md:text-xs text-gray-400 gap-1">
                     <span class="flex items-center gap-1 shrink-0" title="ยอดวิว"><i class="fa-solid fa-eye text-gray-300"></i> ${work.views ? work.views.toLocaleString() : 0}</span>
