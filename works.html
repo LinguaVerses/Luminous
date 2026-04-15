@@ -53,53 +53,49 @@
                     <option value="Hiatus">Hiatus (หยุดพัก)</option>
                 </select>
                 
-                <select id="filter-main-genre" class="flex-1 md:flex-none px-4 py-2.5 bg-emerald-50/50 border border-emerald-100 rounded-full text-sm font-medium text-gray-700 focus:ring-2 focus:ring-primary outline-none cursor-pointer">
-                    <option value="all">หมวดหมู่หลัก</option>
-                    <option value="Action">Action (แอ็กชัน)</option>
+                <select id="filter-primary-genre" class="flex-1 md:flex-none px-4 py-2.5 bg-emerald-50/50 border border-emerald-100 rounded-full text-sm font-medium text-gray-700 focus:ring-2 focus:ring-primary outline-none cursor-pointer">
+                    <option value="all">ทุกหมวดหลัก</option>
+                    <option value="Action">Action (แอคชั่น)</option>
                     <option value="Adventure">Adventure (ผจญภัย)</option>
                     <option value="Comedy">Comedy (ตลก)</option>
-                    <option value="Fantasy">Fantasy (แฟนตาซี)</option>
-                    <option value="Sci-Fi">Sci-Fi (ไซไฟ)</option>
-                    <option value="Romance">Romance (โรแมนติก)</option>
                     <option value="Drama">Drama (ดราม่า)</option>
+                    <option value="Fantasy">Fantasy (แฟนตาซี)</option>
                     <option value="Horror">Horror (สยองขวัญ)</option>
-                    <option value="Mystery">Mystery (สืบสวน)</option>
+                    <option value="Mystery">Mystery (ลึกลับ/สืบสวน)</option>
+                    <option value="Romance">Romance (โรแมนติก)</option>
+                    <option value="Sci-Fi">Sci-Fi (ไซไฟ)</option>
                     <option value="Slice of Life">Slice of Life (ชีวิตประจำวัน)</option>
-                    <option value="Family / Kids">Family / Kids (เด็ก / ครอบครัว)</option>
-                    <option value="Educational">Educational (ความรู้ / สาระ)</option>
-                </select>
-
-                <select id="filter-tone" class="flex-1 md:flex-none px-4 py-2.5 bg-emerald-50/50 border border-emerald-100 rounded-full text-sm font-medium text-gray-700 focus:ring-2 focus:ring-primary outline-none cursor-pointer">
-                    <option value="all">โทนเรื่อง</option>
-                    <option value="Cute">Cute / น่ารัก</option>
-                    <option value="Dark">Dark / ดาร์ก</option>
-                    <option value="Emotional">Emotional / ซึ้ง</option>
-                    <option value="Lighthearted">Lighthearted / เบาสมอง</option>
-                </select>
-
-                <select id="filter-theme" class="flex-1 md:flex-none px-4 py-2.5 bg-emerald-50/50 border border-emerald-100 rounded-full text-sm font-medium text-gray-700 focus:ring-2 focus:ring-primary outline-none cursor-pointer">
-                    <option value="all">ธีมเนื้อหา</option>
-                    <option value="Animal">Animal (สัตว์)</option>
-                    <option value="Magic">Magic (เวทมนตร์)</option>
+                    <option value="Thriller">Thriller (ระทึกขวัญ)</option>
                     <option value="Supernatural">Supernatural (เหนือธรรมชาติ)</option>
-                    <option value="School">School (โรงเรียน)</option>
-                    <option value="Friendship">Friendship (มิตรภาพ)</option>
-                    <option value="Adventure Quest">Adventure Quest (ภารกิจ)</option>
+                    <option value="Historical">Historical (ย้อนยุค/ประวัติศาสตร์)</option>
+                    <option value="Crime">Crime (อาชญากรรม)</option>
+                    <option value="Psychological">Psychological (จิตวิทยา)</option>
                 </select>
 
-                <select id="filter-audience" class="flex-1 md:flex-none px-4 py-2.5 bg-emerald-50/50 border border-emerald-100 rounded-full text-sm font-medium text-gray-700 focus:ring-2 focus:ring-primary outline-none cursor-pointer">
-                    <option value="all">กลุ่มผู้ชม</option>
+                <select id="filter-tags" class="flex-1 md:flex-none px-4 py-2.5 bg-emerald-50/50 border border-emerald-100 rounded-full text-sm font-medium text-gray-700 focus:ring-2 focus:ring-primary outline-none cursor-pointer">
+                    <option value="all">ทุกแท็ก</option>
+                    <option value="BL / Boy Love">BL / Boy Love</option>
+                    <option value="GL / Girl Love">GL / Girl Love</option>
+                    <option value="Family">Family</option>
                     <option value="Kids">Kids</option>
-                    <option value="Teen">Teen</option>
-                    <option value="Adult">Adult</option>
-                </select>
-
-                <select id="filter-style" class="flex-1 md:flex-none px-4 py-2.5 bg-emerald-50/50 border border-emerald-100 rounded-full text-sm font-medium text-gray-700 focus:ring-2 focus:ring-primary outline-none cursor-pointer">
-                    <option value="all">สไตล์</option>
-                    <option value="Anime Style">Anime Style</option>
-                    <option value="Western Cartoon">Western Cartoon</option>
-                    <option value="3D Animation">3D Animation</option>
-                    <option value="2D Animation">2D Animation</option>
+                    <option value="Steampunk">Steampunk</option>
+                    <option value="Cyberpunk">Cyberpunk</option>
+                    <option value="Wuxia">Wuxia (กำลังภายในจีน)</option>
+                    <option value="Mythology">Mythology (ตำนาน)</option>
+                    <option value="Folklore">Folklore (พื้นบ้าน)</option>
+                    <option value="Isekai">Isekai (ต่างโลก)</option>
+                    <option value="Post-apocalyptic">Post-apocalyptic (โลกหลังหายนะ)</option>
+                    <option value="Animal">Animal</option>
+                    <option value="Detective">Detective (นักสืบ)</option>
+                    <option value="AI">AI</option>
+                    <option value="Superpower">Superpower (พลังพิเศษ)</option>
+                    <option value="Dark">Dark</option>
+                    <option value="Light">Light</option>
+                    <option value="Emotional">Emotional (อารมณ์)</option>
+                    <option value="Epic">Epic (มหากาพย์)</option>
+                    <option value="Coming-of-Age">Coming-of-Age (การก้าวพ้นวัย)</option>
+                    <option value="Revenge">Revenge (การแก้แค้น)</option>
+                    <option value="Survival">Survival (การอยู่รอด)</option>
                 </select>
             </div>
         </div>
