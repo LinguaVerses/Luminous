@@ -155,6 +155,11 @@ export async function initHome() {
             // ✨ ข้ามเรื่องที่ยังไม่มีวิดีโอ
             if (!videoUrl || !epData) continue;
 
+	    // ✨ ดึงจำนวนคอมเมนต์ที่แท้จริงจาก Subcollection เพื่อความแม่นยำ
+            const commentsRef = collection(db, "works", workId, "comments");
+            const snapComments = await getDocs(commentsRef);
+            work.totalComments = snapComments.size;
+
             // สร้าง HTML สำหรับ 1 วิดีโอ
             feedHtml += createVideoElement(workId, work, epData);
         }
@@ -232,11 +237,11 @@ function getVideoUI(workId, workData, epData) {
         <div class="action-buttons">
             <button class="action-btn" onclick="handleLike('${workId}')">
                 <i class="fa-solid fa-heart"></i>
-                <span>${workData.totalLikes || '0'}</span>
+                <span>${workData.totalLikes || 0}</span>
             </button>
             <button class="action-btn" onclick="openComments('${workId}')">
                 <i class="fa-solid fa-comment-dots"></i>
-                <span>${workData.totalComments || '0'}</span>
+                <span>${workData.totalComments || 0}</span>
             </button>
             <button class="action-btn sound-btn" data-work-id="${workId}">
                 <i class="fa-solid fa-volume-xmark text-red-400"></i>
@@ -269,6 +274,7 @@ function setupYouTubePlayers() {
 
         if (ytId) {
             ytPlayers[workId] = new YT.Player(`yt-${workId}`, {
+		host: 'https://www.youtube.com', // ✨ เพิ่ม host เพื่อแก้ Error: postMessage target origin mismatch
                 videoId: ytId,
                 playerVars: {
                     'autoplay': 1, 'controls': 0, 'disablekb': 1, 'fs': 0,
@@ -364,6 +370,11 @@ function setupAutoPlay() {
 // เพิ่มความสวยงามและเรียกใช้คำสั่ง Firestore ที่ถูกต้อง
 window.handleLike = async (workId) => {
     try {
+	const auth = getAuth();
+        if (!auth.currentUser) {
+            Swal.fire({ icon: 'warning', title: 'กรุณาล็อกอินก่อนกดถูกใจ', toast: true, position: 'top-end', showConfirmButton: false, timer: 2000 });
+            return;
+        }
         const videoItemElement = document.querySelector(`.video-item[data-work-id="${workId}"]`);
         const likeSpan = videoItemElement ? videoItemElement.querySelector('.action-buttons .action-btn:first-child span') : null;
         
