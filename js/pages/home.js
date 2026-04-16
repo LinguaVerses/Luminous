@@ -356,7 +356,10 @@ function setupAutoPlay() {
             } else {
                 if (player && typeof player.pauseVideo === 'function') {
                     player.pauseVideo();
-                    player.seekTo(0); // เริ่มใหม่เมื่อปัดผ่าน
+                    //ดึงเวลาเริ่มต้นที่กำหนดไว้แล้วสั่งให้วิดีโอกลับไปรอที่จุดนั้นเมื่อปัดผ่าน
+                    const playerDiv = entry.target.querySelector('.video-player');
+                    const startSec = parseInt(playerDiv?.getAttribute('data-start') || 0);
+                    player.seekTo(startSec);
                 }
             }
         });
