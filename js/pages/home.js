@@ -364,11 +364,9 @@ function setupAutoPlay() {
 // เพิ่มความสวยงามและเรียกใช้คำสั่ง Firestore ที่ถูกต้อง
 window.handleLike = async (workId) => {
     try {
-        // หา Element ของตัวเลข Like ใน Video Item นั้นๆ
-        const videoItem = document.querySelector(`.video-item[data-work-id="${workId}"]`);
-        const likeSpan = videoItem.querySelector('.action-buttons .action-btn:first-child span');
+        const videoItemElement = document.querySelector(`.video-item[data-work-id="${workId}"]`);
+        const likeSpan = videoItemElement ? videoItemElement.querySelector('.action-buttons .action-btn:first-child span') : null;
         
-        // อัปเดต UI ทันที
         if (likeSpan) {
             let currentLikes = parseInt(likeSpan.innerText) || 0;
             likeSpan.innerText = currentLikes + 1;
@@ -378,15 +376,6 @@ window.handleLike = async (workId) => {
         await updateDoc(workRef, {
             totalLikes: increment(1)
         });
-
-	const videoItem = document.querySelector(`.video-item[data-work-id="${workId}"]`);
-            if (videoItem) {
-                const commentSpan = videoItem.querySelector('.action-buttons .action-btn:nth-child(2) span');
-                if (commentSpan) {
-                    let currentCount = parseInt(commentSpan.innerText) || 0;
-                    commentSpan.innerText = currentCount + 1;
-                }
-            }
 
         Swal.fire({
             title: 'ถูกใจแล้ว!',
@@ -509,6 +498,15 @@ window.openComments = async (workId) => {
             await updateDoc(workRef, {
                 totalComments: increment(1)
             });
+
+	    const targetFeedItem = document.querySelector(`.video-item[data-work-id="${workId}"]`);
+            if (targetFeedItem) {
+                const commentSpan = targetFeedItem.querySelector('.action-buttons .action-btn:nth-child(2) span');
+                if (commentSpan) {
+                    let currentCount = parseInt(commentSpan.innerText) || 0;
+                    commentSpan.innerText = currentCount + 1;
+                }
+            }
 
             Swal.fire({ icon: 'success', title: 'ส่งแล้ว!', timer: 1000, showConfirmButton: false });
         }
