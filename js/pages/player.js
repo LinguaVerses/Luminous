@@ -136,7 +136,13 @@ function initYouTubePlayer(ytId, epData) {
     
     if (ytPlayer) {
         // ถ้ามี Player อยู่แล้ว ให้เปลี่ยนวิดีโอ
-        ytPlayer.mute(); // ตรวจสอบว่าปิดเสียงเพื่อให้ Autoplay ทำงานบนมือถือ
+        if (isMuted) {
+            ytPlayer.mute();
+        } else {
+            ytPlayer.unMute();
+            ytPlayer.setVolume(100);
+        } 
+	// ตรวจสอบว่าปิดเสียงเพื่อให้ Autoplay ทำงานบนมือถือ
         ytPlayer.loadVideoById(ytId);
         ytPlayer.playVideo(); // สั่งเล่นทันทีสำหรับ iPhone/Android
         startPreviewChecker(epData);
@@ -171,13 +177,18 @@ function createPlayer(ytId, epData) {
             'modestbranding': 1, 
             'rel': 0, 
             'playsinline': 1,
-            'mute': 1,
+            'mute': isMuted ? 1 : 0,
             'enablejsapi': 1, // เปิดใช้งาน API เต็มรูปแบบ
             'origin': window.location.origin // ส่งชื่อโดเมน (GitHub) ไปยืนยันตัวตน
         },
         events: {
             'onReady': (event) => {
-                event.target.mute(); // ต้อง Mute ก่อนเล่นเสมอสำหรับ Mobile
+                if (isMuted) {
+                    event.target.mute(); 
+                } else {
+                    event.target.unMute();
+                    event.target.setVolume(100);
+                }
                 // ทดลองใช้ Promise เพื่อดูว่าโดนบล็อกหรือไม่
                 const playPromise = event.target.playVideo();
                 if (playPromise !== undefined) {
