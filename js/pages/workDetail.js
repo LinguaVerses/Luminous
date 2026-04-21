@@ -12,6 +12,7 @@ let currentEpPage = 1;
 const EP_PER_PAGE = 20; // โหลดหน้าละ 20 ตอน
 let epSortDesc = false; // false = เริ่มตอนแรก (1..), true = เริ่มตอนล่าสุด (99..)
 let isBookmarked = false; // สำหรับเก็บสถานะการบุ๊กมาร์ก
+let purchasedEpisodeIds = new Set();  // ตัวแปรสำหรับเก็บรายการ ID ของตอนที่ผู้ใช้ซื้อแล้วในเรื่องนี้
 
 export async function initWorkDetail() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -316,6 +317,19 @@ async function loadEpisodes() {
         allEpisodes = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })).filter(ep => ep.published !== false);
         filteredEpisodes = [...allEpisodes];
 
+	// ตรวจสอบสิทธิ์การเข้าถึง: ดึงข้อมูลตอนที่ผู้ใช้เคยซื้อไว้ในเรื่องนี้
+        purchasedEpisodeIds = new Set();
+        const user = auth.currentUser;
+        if (user) {
+            const pSnap = await getDocs(collection(db, `users/${user.uid}/purchasedEpisodes`));
+            pSnap.forEach(pDoc => {
+                const pData = pDoc.data();
+                if (pData.workId === workId) {
+                    purchasedEpisodeIds.add(pData.episodeId);
+                }
+            });
+        }
+
         // เรียกใช้ฟังก์ชันคำนวณราคาและแสดงปุ่มปลดล็อคทั้งเรื่อง
         renderCompleteUnlock();
         
@@ -345,7 +359,21 @@ function renderEpisodesPage() {
     // กำหนดหน้าปลายทาง (หาก Shot Animation ใช้ watch.html และ Animation ใช้ player.html)
     const targetPage = currentWork.type === 'shot_animation' ? 'watch.html' : 'player.html';
 
-    container.innerHTML = pageData.map(ep => `
+    // [OVERWRITE] ปรับปรุงส่วนแสดงผลสถานะกุญแจ/ปลดล็อกแล้ว
+    container.innerHTML = pageData.map(ep => {
+        const isFree = ep.isFree !== false;
+        const isPurchased = purchasedEpisodeIds.has(ep.id);
+        
+        let statusHTML = '';
+        if (isFree) {
+            statusHTML = '<span class="text-emerald-500 font-bold text-xs md:text-sm bg-emerald-50 px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap"><i class="fa-solid fa-lock-open"></i> อ่านฟรี</span>';
+        } else if (isPurchased) {
+            statusHTML = '<span class="text-blue-500 font-bold text-xs md:text-sm bg-blue-50 px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap"><i class="fa-solid fa-circle-check"></i> ปลดล็อกแล้ว</span>';
+        } else {
+            statusHTML = `<span class="text-yellow-600 font-bold text-xs md:text-sm bg-yellow-50 px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap"><i class="fa-solid fa-key"></i> ${ep.pricePoints || 0} กุญแจ</span>`;
+        }
+
+        return `
         <a href="${targetPage}?workId=${workId}&epId=${ep.id}" class="flex items-center justify-between p-4 bg-white hover:bg-emerald-50 rounded-2xl border border-gray-100 hover:border-emerald-200 transition-colors shadow-sm group">
             <div class="flex items-center gap-4 overflow-hidden">
                 <div class="w-10 h-10 rounded-full bg-emerald-50 shrink-0 flex items-center justify-center text-primary font-bold shadow-inner border border-emerald-100 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all">
@@ -360,12 +388,10 @@ function renderEpisodesPage() {
                 </div>
             </div>
             <div class="shrink-0 pl-2">
-                ${ep.isFree !== false 
-                    ? '<span class="text-emerald-500 font-bold text-xs md:text-sm bg-emerald-50 px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap"><i class="fa-solid fa-lock-open"></i> อ่านฟรี</span>' 
-                    : `<span class="text-yellow-600 font-bold text-xs md:text-sm bg-yellow-50 px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap"><i class="fa-solid fa-key"></i> ${ep.pricePoints || 0} กุญแจ</span>`}
+                ${statusHTML}
             </div>
         </a>
-    `).join('');
+    `}).join('');
 
     renderEpPagination();
 }
