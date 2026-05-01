@@ -32,9 +32,9 @@ export async function initHome() {
             .video-item {
                 height: calc(100dvh - 60px);
                 width: 100%;
-		max-width: 450px; /*ล็อกความกว้างเพื่อให้ปุ่มและข้อความไม่หลุดออกจากตัววิดีโอ*/
-		margin: 0 auto;   /*จัดวิดีโอให้อยู่กลางจอคอมพิวเตอร์ */
-		padding: 0;
+				max-width: 450px; /*ล็อกความกว้างเพื่อให้ปุ่มและข้อความไม่หลุดออกจากตัววิดีโอ*/
+				margin: 0 auto;   /*จัดวิดีโอให้อยู่กลางจอคอมพิวเตอร์ */
+				padding: 0;
                 scroll-snap-align: center;
                 position: relative;
                 display: flex;
@@ -43,6 +43,13 @@ export async function initHome() {
                 background-color: #111;
                 overflow: hidden;
             }
+			/* เมื่อหน้าจอกว้างกว่า 450px ขึ้นไป ถึงจะจำกัดความกว้าง */
+			@media (min-width: 451px) {
+    			.video-item {
+        		max-width: 450px; 
+        		/* ล็อกความกว้างเฉพาะบนคอม เพื่อให้ปุ่มและข้อความไม่แผ่กระจายเกินไป */
+    			}
+			}
             .video-player {
                 width: 100%;
                 height: 100%;
