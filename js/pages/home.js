@@ -22,12 +22,13 @@ export async function initHome() {
             ::-webkit-scrollbar { display: none; }
             .feed-container {
                 height: calc(100dvh - 60px);
-                width: 100vw;
-                max-width: 100%;
+                width: 100%;
+                max-width: 100vw;
                 overflow-y: scroll;
                 scroll-snap-type: y mandatory;
                 background-color: #000;
                 position: relative;
+				margin: 0;
             }
             .video-item {
                 height: calc(100dvh - 60px);
