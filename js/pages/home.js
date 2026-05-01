@@ -24,7 +24,6 @@ export async function initHome() {
                 height: calc(100dvh - 60px);
                 width: 100vw;
                 max-width: 100%;
-                margin: 0 auto;
                 overflow-y: scroll;
                 scroll-snap-type: y mandatory;
                 background-color: #000;
@@ -33,9 +32,10 @@ export async function initHome() {
             .video-item {
                 height: calc(100dvh - 60px);
                 width: 100%;
+		max-width: 450px; /*ล็อกความกว้างเพื่อให้ปุ่มและข้อความไม่หลุดออกจากตัววิดีโอ*/
+		margin: 0 auto;   /*จัดวิดีโอให้อยู่กลางจอคอมพิวเตอร์ */
 		padding: 0;
-                margin: 0;
-                scroll-snap-align: start;
+                scroll-snap-align: center;
                 position: relative;
                 display: flex;
                 justify-content: center;
@@ -356,10 +356,7 @@ function setupAutoPlay() {
             } else {
                 if (player && typeof player.pauseVideo === 'function') {
                     player.pauseVideo();
-                    //ดึงเวลาเริ่มต้นที่กำหนดไว้แล้วสั่งให้วิดีโอกลับไปรอที่จุดนั้นเมื่อปัดผ่าน
-                    const playerDiv = entry.target.querySelector('.video-player');
-                    const startSec = parseInt(playerDiv?.getAttribute('data-start') || 0);
-                    player.seekTo(startSec);
+                    player.seekTo(0); // เริ่มใหม่เมื่อปัดผ่าน
                 }
             }
         });
