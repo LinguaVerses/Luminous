@@ -18,7 +18,7 @@
         .player-container {
             position: relative;
             width: 100%;
-            height: 100dvh;
+            height: 100vh;
             max-width: 450px; /* ขนาดมือถือ */
             margin: 0 auto;
             background-color: #111;
@@ -34,13 +34,37 @@
         .player-ui {
             position: absolute;
             inset: 0;
-            z-index: 10;
+            z-index: 15;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             padding: 20px 15px;
 	    pointer-events: none;
         }
+
+	/* แถบ Glassmorphism บังส่วนบน */
+        .glass-top {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 60px; /* ปรับความสูงตามความเหมาะสม */
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%);
+            backdrop-filter: blur(15px); /* ขุ่นมากเพื่อปิดข้อความ YT */
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 5;
+            pointer-events: auto; /* ป้องกันการคลิกเข้า YouTube */
+        }
+        /* แถบ Glassmorphism บังส่วนล่าง */
+        .glass-bottom {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 60px;
+            background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 100%);
+            backdrop-filter: blur(4px); /* ขุ่นน้อยลงเพื่อให้ดูเคลียร์ */
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 5;
+            pointer-events: auto; /* ป้องกันการคลิกเข้า YouTube */
+        }
+
         /* หน้าจอ Blur เมื่อติดเหรียญ */
         .unlock-overlay {
             position: absolute;
@@ -67,16 +91,20 @@
 
 	<div class="youtube-player" id="yt-player"></div>
 
+	<!-- แถบ Glassmorphism สำหรับบดบัง UI YouTube และป้องกันการคลิก -->
+        <div class="glass-top"></div>
+        <div class="glass-bottom"></div>
+
         <div class="player-ui">
             <div class="flex justify-between items-center drop-shadow-md">
                 <a href="index.html" class="w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/80 pointer-events-auto">
-                    <i class="fa-solid fa-chevron-left"></i>
+                    <i class="fa-solid fa-home"></i>
                 </a>
                 <div class="text-center flex-1 px-4">
                     <h1 class="text-sm font-bold truncate" id="player-title">กำลังโหลด...</h1>
                 </div>
                 <button id="next-ep-btn" class="w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/80 pointer-events-auto" title="ตอนถัดไป">
-                    <i class="fa-solid fa-forward-step"></i>
+                    <i class="fa-solid fa-angles-right"></i>
                 </button>
             </div>
 
