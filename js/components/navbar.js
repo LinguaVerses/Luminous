@@ -12,7 +12,7 @@ export function loadNavbar() {
             <div class="container mx-auto px-4 py-3 flex justify-between items-center">
                 
 		<a href="index.html" class="text-2xl font-bold flex items-center gap-3 hover:text-emerald-100 transition-colors">
-    			<img src="assets/images/logo.webp" alt="Luminous Story Logo" class="h-10 w-auto object-contain" onerror="this.src='https://placehold.co/40x40/10b981/ffffff?text=LS'">
+    			<img src="assets/images/logo.jpeg" alt="Luminous Story Logo" class="h-10 w-auto object-contain" onerror="this.src='https://placehold.co/40x40/10b981/ffffff?text=LS'">
     			Luminous Story
 		</a>
 
