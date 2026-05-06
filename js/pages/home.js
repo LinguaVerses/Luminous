@@ -16,25 +16,30 @@ export async function initHome() {
     const container = document.getElementById('home-content');
     if (!container) return;
 
+// ประกาศตัวแปรไว้ต้นฟังก์ชันเพื่อให้ Scope ครอบคลุมทั้ง initHome (แก้ปัญหาหน้าขาวจาก ReferenceError)
+    const auth = getAuth();
+    let userRole = 'Viewer';
+    let userProfileImg = null;
+
     // 1️⃣ CSS สำหรับ Vertical Feed สไตล์ TikTok
     const feedStyles = `
         <style>
             ::-webkit-scrollbar { display: none; }
             .feed-container {
-                height: calc(100dvh - 60px);
+                height: 100dvh; /* ปรับเป็นเต็มจอ */
                 width: 100%;
                 max-width: 100vw;
                 overflow-y: scroll;
                 scroll-snap-type: y mandatory;
                 background-color: #000;
                 position: relative;
-				margin: 0;
+                margin: 0;
             }
             .video-item {
-                height: calc(100dvh - 60px);
+                height: 100dvh; /* ปรับเป็นเต็มจอ */
                 width: 100%;
-				margin: 0 auto;   /*จัดวิดีโอให้อยู่กลางจอคอมพิวเตอร์ */
-				padding: 0;
+                margin: 0 auto;
+                padding: 0;
                 scroll-snap-align: center;
                 position: relative;
                 display: flex;
@@ -43,13 +48,53 @@ export async function initHome() {
                 background-color: #111;
                 overflow: hidden;
             }
-			/* เมื่อหน้าจอกว้างกว่า 450px ขึ้นไป ถึงจะจำกัดความกว้าง */
-			@media (min-width: 451px) {
-    			.video-item {
-        		max-width: 450px; 
-        		/* ล็อกความกว้างเฉพาะบนคอม เพื่อให้ปุ่มและข้อความไม่แผ่กระจายเกินไป */
-    			}
-			}
+
+	    /* Glassmorphism Navigation */
+            .glass-nav {
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .top-nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 50;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px 20px;
+                background: rgba(0, 0, 0, 0.3);
+                backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .bottom-nav {
+                position: fixed;
+                bottom: 0.75rem;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 90%;
+                max-width: 450px;
+                z-index: 50;
+                border-radius: 20px;
+                display: flex;
+                justify-content: space-around;
+                padding: 10px 5px;
+
+		/* เพิ่มส่วนนี้เพื่อรองรับ iPhone รุ่นใหม่ที่มี Home Bar */
+    		padding-bottom: calc(10px + env(safe-area-inset-bottom));
+            }
+
+/* เมื่อหน้าจอกว้างกว่า 450px ขึ้นไป ถึงจะจำกัดความกว้าง */
+@media (min-width: 451px) {
+    .video-item {
+        max-width: 450px; 
+        /* ล็อกความกว้างเฉพาะบนคอม เพื่อให้ปุ่มและข้อความไม่แผ่กระจายเกินไป */
+    }
+}
             .video-player {
                 width: 100%;
                 height: 100%;
@@ -69,7 +114,7 @@ export async function initHome() {
             }
             .action-buttons {
                 position: absolute;
-		bottom: 25px;
+		bottom: 100px;
 		padding-bottom: env(safe-area-inset-bottom);
                 /*bottom: calc(80px + env(safe-area-inset-bottom));*/
                 right: 10px;
@@ -90,7 +135,31 @@ export async function initHome() {
             }
             .action-btn:hover { transform: scale(1.1); }
             .action-btn i { font-size: 28px; filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.8)); }
+
             .action-btn span { font-size: 12px; margin-top: 4px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
+
+	    .profile-action {
+                width: 44px;
+                height: 44px;
+                border-radius: 50%;
+                border: 2px solid #10b981; /* สี Emerald-500 */
+                overflow: hidden;
+                margin-bottom: 8px;
+                box-shadow: 0 0 8px rgba(0,0,0,0.4);
+                transition: transform 0.2s;
+            }
+            .profile-action:hover { transform: scale(1.05); }
+	    .profile-action {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(255, 255, 255, 0.1);
+            }
+            .profile-action img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
         </style>
     `;
 
@@ -128,6 +197,17 @@ export async function initHome() {
         }
 
         // 3️⃣ วนลูปเพื่อดึง "ตอนล่าสุด" (Episode) ของแต่ละเรื่อง
+
+        if (auth.currentUser) {
+            const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
+            if (userDoc.exists()) {
+                const userData = userDoc.data();
+                userRole = userData.role || 'Viewer';
+                userProfileImg = userData.photoURL || 
+                                userData.creatorProfile?.profileImage || auth.currentUser.photoURL || userProfileImg;
+            }
+        }
+
         for (const work of topWorks) {
             const workId = work.id;
 
@@ -167,8 +247,8 @@ export async function initHome() {
             const snapComments = await getDocs(commentsRef);
             work.totalComments = snapComments.size;
 
-            // สร้าง HTML สำหรับ 1 วิดีโอ
-            feedHtml += createVideoElement(workId, work, epData);
+            // สร้าง HTML และ userProfileImg สำหรับ 1 วิดีโอ
+            feedHtml += createVideoElement(workId, work, epData, userProfileImg);
         }
 
     } catch (error) {
@@ -179,14 +259,50 @@ export async function initHome() {
         feedHtml = `<div class="text-white text-center flex items-center justify-center h-[100vh] w-full font-bold text-xl">ยังไม่มีผลงานแอนิเมชันในขณะนี้</div>`;
 }
 
-    // 5️⃣ นำ HTML ไปใส่ใน Container
+    // 5️⃣ นำ HTML ไปใส่ใน Container พร้อม UI ใหม่
     container.innerHTML = `
         ${feedStyles}
-        <div class="bg-black w-full min-h-screen">
+        
+        <!-- Top Immersive Info -->
+        <nav class="top-nav">
+            <div class="flex items-center">
+                <!--<img src="assets/images/logo.webp" alt="Logo" class="h-8 w-8 rounded-full border border-white/50">-->
+            </div>
+            
+            <div id="top-story-info" class="text-white text-center flex-1 mx-4 leading-tight">
+                 <p class="text-sm font-bold text-emerald-400 truncate" id="current-work-title">-</p>
+                 <p class="text-[11px] font-normal opacity-90 truncate" id="current-ep-title">-</p>
+                 <p class="text-[10px] font-normal opacity-70 truncate" id="current-creator-name">-</p>
+            </div>
+
+            <div class="w-8"></div> 
+        </nav>
+
+        <div class="bg-black w-full h-screen">
             <div class="feed-container" id="video-feed">
                 ${feedHtml}
             </div>
         </div>
+
+        <!-- Modern Bottom Navigation -->
+        <nav class="bottom-nav glass-nav text-white shadow-2xl">
+            <button onclick="window.location.href='index.html'" class="flex flex-col items-center gap-1 opacity-100">
+                <i class="fa-solid fa-house text-lg text-emerald-400"></i>
+                <span class="text-[10px]">หน้าแรก</span>
+            </button>
+            <button onclick="window.location.href='notifications.html'" class="flex flex-col items-center gap-1 opacity-60">
+                <i class="fa-solid fa-bell text-lg"></i>
+                <span class="text-[10px]">แจ้งเตือน</span>
+            </button>
+            <button onclick="window.location.href='works.html'" class="flex flex-col items-center gap-1 opacity-60">
+                <i class="fa-solid fa-list text-lg"></i>
+                <span class="text-[10px]">คลัง</span>
+            </button>
+            <button onclick="openMoreMenu('${userRole}')" class="flex flex-col items-center gap-1 opacity-60">
+                <i class="fa-solid fa-ellipsis text-lg"></i>
+                <span class="text-[10px]">เพิ่มเติม</span>
+            </button>
+        </nav>
     `;
 
     // 6️⃣ รอให้ YouTube API โหลดเสร็จแล้วค่อยตั้งค่า Player ควบคุมเสียง
@@ -209,39 +325,45 @@ function extractYouTubeID(url) {
     return (match && match[2].length === 11) ? match[2] : null;
 }
 
-function createVideoElement(workId, workData, epData) {
+function createVideoElement(workId, workData, epData, userProfileImg) {
     const ytId = extractYouTubeID(epData.videoUrl);
-
-    // ✨ กำหนดค่า Default สำหรับช่วงที่ให้ดูฟรี (สมมติถ้าครีเอเตอร์ยังไม่ได้ตั้งค่า จะเล่น 0-10 วินาที)
     const startSec = epData.hookStart || 0;
     const endSec = epData.hookEnd || 10;
     
+    // เก็บข้อมูลไว้ใน attributes เพื่อให้ Observer อัปเดต Top Nav ได้ง่ายขึ้น
+    const dataAttrs = `
+        data-work-id="${workId}" 
+        data-title="${workData.title || 'Untitled'}" 
+        data-ep="EP.${epData.episodeNumber || 1} ${epData.title || ''}" 
+        data-creator="@${workData.creatorName}"
+    `;
+
     if (!ytId) {
         return `
-            <div class="video-item" data-work-id="${workId}">
+            <div class="video-item" ${dataAttrs}>
                 <img src="${workData.coverImage || 'https://placehold.co/400x800/111/fff?text=No+Video'}" class="video-player object-cover w-full h-full">
-                ${getVideoUI(workId, workData, epData)}
+                ${getVideoUI(workId, workData, epData, userProfileImg)}
             </div>
         `;
     }
 
     return `
-        <div class="video-item" data-work-id="${workId}">
+        <div class="video-item" ${dataAttrs}>
             <div id="yt-${workId}" class="video-player" data-yt-id="${ytId}" data-start="${startSec}" data-end="${endSec}" style="pointer-events: auto;"></div>
-            ${getVideoUI(workId, workData, epData)}
+            ${getVideoUI(workId, workData, epData, userProfileImg)}
         </div>
     `;
 }
 
-function getVideoUI(workId, workData, epData) {
+function getVideoUI(workId, workData, epData, userProfileImg) {
     return `
-        <div class="video-info">
-            <h3 class="text-xl font-bold mb-1 drop-shadow-md">@${workData.creatorName}</h3>
-            <h4 class="text-lg mb-1 font-semibold text-emerald-400 drop-shadow-md">${workData.title || 'Untitled'}</h4>
-            <p class="text-sm line-clamp-2 drop-shadow-md">EP.${epData.episodeNumber || 1} ${epData.title || ''}</p>
-        </div>
+	<div class="action-buttons">
+	    <a href="profile.html" class="profile-action">
+                ${userProfileImg 
+                    ? `<img src="${userProfileImg}" alt="Profile">` 
+                    : `<i class="fa-solid fa-user fa-beat text-white text-lg"></i>`}
+            </a>
 
-        <div class="action-buttons">
             <button class="action-btn" onclick="handleLike('${workId}')">
                 <i class="fa-solid fa-heart"></i>
                 <span>${workData.totalLikes || 0}</span>
@@ -357,13 +479,17 @@ function setupAutoPlay() {
             const player = ytPlayers[workId];
             
             if (entry.isIntersecting) {
+		document.getElementById('current-work-title').innerText = entry.target.getAttribute('data-title');
+                document.getElementById('current-ep-title').innerText = entry.target.getAttribute('data-ep');
+                document.getElementById('current-creator-name').innerText = entry.target.getAttribute('data-creator');
+
                 if (player && typeof player.playVideo === 'function') {
-                    player.playVideo();
+                    player.playVideo(); // สั่งให้เล่นวิดีโอทันทีเมื่อปัดมาถึง
                 }
             } else {
+                // เมื่อวิดีโอออกจากหน้าจอ ให้สั่งหยุดเพื่อประหยัดทรัพยากร
                 if (player && typeof player.pauseVideo === 'function') {
                     player.pauseVideo();
-                    player.seekTo(0); // เริ่มใหม่เมื่อปัดผ่าน
                 }
             }
         });
@@ -644,4 +770,42 @@ window.submitReply = async (workId, commentId) => {
     input.value = '';
     window.toggleReply(commentId);
     window.loadReplies(workId, commentId);
+};
+
+window.openMoreMenu = (role) => {
+    let menuItems = [
+        { label: 'ชั้นวาง', icon: 'fa-film', url: 'library.html' },
+        { label: 'เติมเงิน/ซื้อกุญแจ', icon: 'fa-coins', url: 'topup.html' },
+        { label: 'ประวัติการใช้กุญแจ', icon: 'fa-key', url: 'transactions.html' },
+        { label: 'ติดต่อเรา', icon: 'fa-envelope', url: 'contact-us.html' }
+    ];
+
+    if (role === 'creator' || role === 'admin') {
+        menuItems.push({ label: 'แดชบอร์ด', icon: 'fa-chart-line', url: 'creator/dashboard.html' });
+        menuItems.push({ label: 'จัดการผลงาน', icon: 'fa-pen-to-square', url: 'creator/works.html' });
+    }
+
+    if (role === 'admin') {
+        menuItems.push({ label: 'จัดการการเงิน', icon: 'fa-wallet', url: 'admin/finance.html' });
+    }
+
+    const menuHtml = menuItems.map(item => `
+        <div onclick="window.location.href='${item.url}'" class="flex items-center gap-4 p-4 hover:bg-emerald-50 rounded-xl cursor-pointer transition-all border-b border-gray-50 last:border-0">
+            <div class="w-10 h-10 bg-emerald-100 text-emerald-600 flex items-center justify-center rounded-full flex-shrink-0">
+                <i class="fa-solid ${item.icon}"></i>
+            </div>
+            <span class="font-bold text-gray-700">${item.label}</span>
+        </div>
+    `).join('');
+
+    Swal.fire({
+        title: 'เมนูเพิ่มเติม',
+        html: `<div class="grid grid-cols-1 gap-1 mt-4 text-left">${menuHtml}</div>`,
+        showConfirmButton: false,
+        showCloseButton: true,
+        padding: '1.5rem',
+        borderRadius: '20px',
+        width: '90%',
+        maxWidth: '400px'
+    });
 };
