@@ -266,7 +266,7 @@ export async function initHome() {
         <!-- Top Immersive Info -->
         <nav class="top-nav">
             <div class="flex items-center">
-                <!--<img src="assets/images/logo.webp" alt="Logo" class="h-8 w-8 rounded-full border border-white/50">-->
+                <img src="assets/images/logo.jpeg" alt="Logo" class="h-8 w-8 rounded-full border border-white/50">
             </div>
             
             <div id="top-story-info" class="text-white text-center flex-1 mx-4 leading-tight">
