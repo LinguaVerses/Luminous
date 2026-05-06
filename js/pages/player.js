@@ -265,6 +265,9 @@ function startPreviewChecker(epData) {
 function showUnlockScreen(epData) {
     const unlockScreen = document.getElementById('unlock-screen');
     unlockScreen.style.display = 'flex';
+
+    // ปรับ z-index ให้หน้าจอปลดล็อกอยู่หน้าสุดเสมอ
+    unlockScreen.style.zIndex = '30';
     
     // อัปเดตราคาบนปุ่มและโชว์ยอดคงเหลือจริง
     const btn = document.getElementById('unlock-btn');
