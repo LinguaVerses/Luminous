@@ -256,7 +256,7 @@ export async function initHome() {
 }
 
     if (!feedHtml) {
-        feedHtml = `<div class="text-white text-center flex items-center justify-center h-[100vh] w-full font-bold text-xl">ยังไม่มีผลงานแอนิเมชันในขณะนี้</div>`;
+        feedHtml = `<div class="text-white text-center flex items-center justify-center h-[100dvh] w-full font-bold text-xl">ยังไม่มีผลงานแอนิเมชันในขณะนี้</div>`;
 }
 
     // 5️⃣ นำ HTML ไปใส่ใน Container พร้อม UI ใหม่
@@ -278,7 +278,7 @@ export async function initHome() {
             <div class="w-8"></div> 
         </nav>
 
-        <div class="bg-black w-full h-screen">
+        <div class="bg-black w-full h-[100dvh] overflow-hidden">
             <div class="feed-container" id="video-feed">
                 ${feedHtml}
             </div>
